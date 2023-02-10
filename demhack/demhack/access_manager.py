@@ -1,18 +1,12 @@
 import json
+from demhack.utils import SystemObject
 
 USER = 1
 MANAGER = 2
 
-class access_manager:
-    keys = dict()
+class AccessManager (SystemObject): 
     def __init__(self):
-        pass
-    def load(self, filename):
-        with open(filename) as f:
-            self.keys = json.load(f)
-    def dump(self, filename):
-        with open(filename, 'w') as f:
-            print(json.dumps(self.keys, ensure_ascii=False, indent=4), file=f)
+        self.keys = dict() 
     def set_status(self, id, status):
         if id in self.keys:
             self.keys[id] = (status, self.keys[id][1])

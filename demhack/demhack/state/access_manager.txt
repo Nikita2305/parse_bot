@@ -1,10 +1,11 @@
 {
-    "305197734": [
-        2,
-        "derevo_prankov"
-    ],
-    "123": [
-        1,
-        "None"
-    ]
+    "py/object": "demhack.access_manager.AccessManager",
+    "keys": {
+        "305197734": {
+            "py/tuple": [
+                2,
+                "derevo_prankov"
+            ]
+        }
+    }
 }

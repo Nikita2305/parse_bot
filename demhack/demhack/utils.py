@@ -1,6 +1,7 @@
 import logging
 import os
 import socket
+import jsonpickle
 
 from telegram.ext import (
     CommandHandler,
@@ -21,6 +22,7 @@ from telegram import (
 )
 
 manager_path = os.path.dirname(__file__) + "/state/access_manager.txt"
+parser_path = os.path.dirname(__file__) + "/state/parser.txt"
 ADMIN_ID = "305197734"
 
 ARROWe = u'\U00002B07'
@@ -31,6 +33,16 @@ COOL_SMILEe = u'\U0001F60E'
 ROCKET_SMILEe = u'\U0001F680'
 LOCKe = u'\U0001F510'
 HANDUPe = u'\U0000270B'
+
+class SystemObject:
+    def __init__(self):
+        pass
+    def load(self, filename):
+        with open(filename) as f:
+            return jsonpickle.decode(f.read())
+    def dump(self, filename):
+        with open(filename, 'w') as f:
+            print(jsonpickle.encode(self, indent=4), file=f)
 
 def cancel(update, context):
     update.message.reply_text("Отменил текущее действие")
@@ -48,7 +60,11 @@ def obtain_message(update, logger=logging.getLogger("temp"), delete=True):
     except Exception as ex:
         if (delete):
             logger.debug(f"Expecting raised error: {ex}")
-        message = update.callback_query.message
+        try:
+            message = update.callback_query.message
+        except Exception as ex:
+            logger.debug("Not a message probably")
+            return None
         if (delete):
             logger.debug(f"Got as callback message")
         if (delete):
@@ -59,13 +75,6 @@ def obtain_message(update, logger=logging.getLogger("temp"), delete=True):
             except Exception as ex1:
                 logger.warning(f"Menu from update cannot be deleted\nUpdate: {update}\nCause: {ex1}")
     return message
-
-def send_menu(update, context, state):
-    message = obtain_message(update, state.logger, delete=False)
-    keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton('Помощь', callback_data="Help")]
-    ])
-    message.reply_text('Что теперь будем делать?', reply_markup=keyboard)
 
 class BasicCommunication:
     

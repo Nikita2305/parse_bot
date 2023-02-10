@@ -14,34 +14,29 @@ from telegram.ext import (
     ConversationHandler
 )
 
-# TODO: do not forget to dump ChatParser here
-
 def dump_system(state):
     state.logger.debug("Dumping system...") 
     state.access_manager_obj.dump(manager_path)
+    state.parser.dump(parser_path)
     state.logger.debug("Successful!")
 
+# deprecated menu_sender
 def help_decorator(function, state):
     @wraps(function)
     def decorated(update, context):
-        ret = function(update, context)
-        """
-        if (ret == ConversationHandler.END):
-            send_menu(update, context, state)
-        """
-        return ret
+        return function(update, context)
     return decorated
 
 def cancel_decorator(function, state):
     @wraps(function)
     def decorated(update, context):
         message = obtain_message(update, state.logger, delete=False)
-        state.logger.debug(f"{function.__name__}()\ntext: {message.text}\nuser: @{update.effective_user.username}")
-        if (message.text == "/cancel"):
-            state.logger.debug(f"~{function.__name__}() by cancel")
-            return cancel(update, context)
+        if message is not None:    
+            state.logger.debug(f"text: {message.text}\nuser: @{update.effective_user.username}")
+            if (message.text == "/cancel"):
+                state.logger.debug(f"~{function.__name__}() by cancel")
+                return cancel(update, context)
         ret = function(update, context)
-        state.logger.debug(f"~{function.__name__}()")
         dump_system(state)
         return ret
     return help_decorator(decorated, state)
@@ -50,14 +45,15 @@ def access_decorator(function, state):
     @wraps(function)
     def decorated(update, context):
         message = obtain_message(update, state.logger, delete=False) 
-        state.logger.debug(f"{function.__name__}()\ntext: {message.text}\nuser: @{update.effective_user.username}")
-        if (not function in state.permissions[state.access_manager_obj.get_status(str(update.effective_user.id), str(update.effective_user.username))]):
-            state.logger.warning(f"Access denied for update: {update}")
-            message.reply_text("Нет доступа к данной операции")
-            state.logger.debug(f"~{function.__name__}() by cancel")
-            return ConversationHandler.END
+        if message is not None:
+            state.logger.debug(f"text: {message.text}\nuser: @{update.effective_user.username}")
+            user_permissions = state.access_manager_obj.get_status(str(update.effective_user.id), str(update.effective_user.username))
+            if (not function in state.permissions[user_permissions]):
+                state.logger.warning(f"Access denied for update: {update}")
+                # message.reply_text("Нет доступа к данной операции")
+                state.logger.debug(f"~{function.__name__}() by cancel")
+                return ConversationHandler.END
         ret = function(update, context)
-        state.logger.debug(f"~{function.__name__}()")
         dump_system(state) 
         return ret
     return help_decorator(decorated, state)           
@@ -73,36 +69,34 @@ class State:
         self.help_texts = help_texts 
         self.parser = parser
 
-def add_to_chat(update, context):
+def useless_f(update, context):
     pass
 
 def main(logger, access_manager_obj, parser):
     updater = Updater(BOT_KEY, use_context=True)
     dp = updater.dispatcher
     scenarios = [
-        AddToChat(ChatMemberHandler(add_to_chat, ChatMemberHandler.MY_CHAT_MEMBER), show_help=False),
-
+        AddToChat(ChatMemberHandler(useless_f, ChatMemberHandler.MY_CHAT_MEMBER), show_help=False),
+ 
         PermissionHelpText("\n*MANAGER HELP:*\n", MANAGER),
 
         Help(),
-        GetId(),
+        GetId(), 
+        ThisIsAdminka(),
 
         PermissionHelpText("\n", MANAGER),
+    
+        GetInfo(),
 
-        GetKeywords(),
+        PermissionHelpText("\n*SETTINGS:*\n", MANAGER), 
+
         AddKeyword(),
         EraseKeyword(),
 
-        PermissionHelpText("\n", MANAGER),
-
-        GetChats(),
-        EraseCurrentChat(),
-
-        PermissionHelpText("\n", MANAGER),
-
-        GetManagers(),
         AddManager(),
-        EraseManager() 
+        EraseManager(),
+
+        ParseTextMessage(handler=MessageHandler(Filters.text & ~Filters.command, useless_f), show_help=False)
     ]
     
     help_texts = {USER: "", MANAGER: ""}
@@ -148,15 +142,20 @@ def declare_globals():
     logger = logging.getLogger(toplevel)
     logger.warning("Bot is running now, logging enabled")
  
-    access_manager_obj = access_manager()
+    access_manager_obj = AccessManager()
     try:
-        access_manager_obj.load(manager_path)
+        access_manager_obj = access_manager_obj.load(manager_path)
         logger.debug("Loaded access_manager from file")
     except Exception as e: 
         logger.debug(str(e))
     access_manager_obj.set_status(ADMIN_ID, MANAGER)
 
-    parser = ChatParser() # TODO: get from the file
+    parser = ChatParser()
+    try:
+        parser = parser.load(parser_path)
+        logger.debug("Loaded parser from file")
+    except Exception as e: 
+        logger.debug(str(e))
     
     return logger, access_manager_obj, parser
     
