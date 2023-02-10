@@ -1,0 +1,898 @@
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:37:39,813] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:37:40,474] [Errno 2] No such file or directory: '/Users/nikitanikitin/Activities/damn/demhack/demhack/state/access_manager.txt'
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.utils.PermissionHelpText object at 0x103d0d2a0>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.Start object at 0x103d0d2d0>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.Help object at 0x103d0d120>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.Help object at 0x103d0d0f0>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.GetId object at 0x103d0d180>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.utils.PermissionHelpText object at 0x103d0d240>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.GetManagers object at 0x103d0d1e0>
+[INFO:2022-09-25 13:37:40,476] Adding handler: <demhack.functions.AddManager object at 0x103d0d090>
+[INFO:2022-09-25 13:37:40,477] Adding handler: <demhack.functions.EraseManager object at 0x103d0d060>
+[DEBUG:2022-09-25 13:37:40,477] Polling was started
+[DEBUG:2022-09-25 13:37:48,283] execute()
+text: /start
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:37:52,697] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:39:21,879] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:39:22,296] [Errno 2] No such file or directory: '/Users/nikitanikitin/Activities/damn/demhack/demhack/state/access_manager.txt'
+[INFO:2022-09-25 13:39:22,298] Adding handler: <demhack.utils.PermissionHelpText object at 0x101e786d0>
+[INFO:2022-09-25 13:39:22,298] Adding handler: <demhack.functions.Start object at 0x101e786a0>
+[INFO:2022-09-25 13:39:22,298] Adding handler: <demhack.functions.Help object at 0x101e78850>
+[INFO:2022-09-25 13:39:22,298] Adding handler: <demhack.functions.Help object at 0x101e78880>
+[INFO:2022-09-25 13:39:22,299] Adding handler: <demhack.functions.GetId object at 0x101e787f0>
+[INFO:2022-09-25 13:39:22,299] Adding handler: <demhack.utils.PermissionHelpText object at 0x101e78730>
+[INFO:2022-09-25 13:39:22,299] Adding handler: <demhack.functions.GetManagers object at 0x101e78790>
+[INFO:2022-09-25 13:39:22,299] Adding handler: <demhack.functions.AddManager object at 0x101e788e0>
+[INFO:2022-09-25 13:39:22,299] Adding handler: <demhack.functions.EraseManager object at 0x101e78910>
+[DEBUG:2022-09-25 13:39:22,299] Polling was started
+[DEBUG:2022-09-25 13:39:24,213] execute()
+text: /start
+user: @derevo_prankov
+[ERROR:2022-09-25 13:39:24,590] Update:
+{'message': {'caption_entities': [], 'group_chat_created': False, 'delete_chat_photo': False, 'date': 1664102364, 'chat': {'first_name': 'N', 'type': 'private', 'username': 'derevo_prankov', 'id': 305197734, 'last_name': 'N'}, 'new_chat_photo': [], 'new_chat_members': [], 'message_id': 6988, 'channel_chat_created': False, 'entities': [{'length': 6, 'offset': 0, 'type': 'bot_command'}], 'supergroup_chat_created': False, 'text': '/start', 'photo': [], 'from': {'first_name': 'N', 'is_bot': False, 'id': 305197734, 'username': 'derevo_prankov', 'language_code': 'en', 'last_name': 'N'}}, 'update_id': 374728238}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 25, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 55, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/functions.py", line 78, in execute
+    message.reply_text(self.help_texts[self.access_manager_obj.get_status(
+
+Error: 'Start' object has no attribute 'help_texts'
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:45:24,605] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:45:25,096] [Errno 2] No such file or directory: '/Users/nikitanikitin/Activities/damn/demhack/demhack/state/access_manager.txt'
+[INFO:2022-09-25 13:45:25,098] Adding handler: <demhack.utils.PermissionHelpText object at 0x10587c6d0>
+[INFO:2022-09-25 13:45:25,098] Adding handler: <demhack.functions.Start object at 0x10587c6a0>
+[INFO:2022-09-25 13:45:25,098] Adding handler: <demhack.functions.Help object at 0x10587c850>
+[INFO:2022-09-25 13:45:25,098] Adding handler: <demhack.functions.Help object at 0x10587c880>
+[INFO:2022-09-25 13:45:25,098] Adding handler: <demhack.functions.GetId object at 0x10587c7f0>
+[INFO:2022-09-25 13:45:25,099] Adding handler: <demhack.utils.PermissionHelpText object at 0x10587c730>
+[INFO:2022-09-25 13:45:25,099] Adding handler: <demhack.functions.GetManagers object at 0x10587c790>
+[INFO:2022-09-25 13:45:25,099] Adding handler: <demhack.functions.AddManager object at 0x10587c8e0>
+[INFO:2022-09-25 13:45:25,099] Adding handler: <demhack.functions.EraseManager object at 0x10587c910>
+[DEBUG:2022-09-25 13:45:25,099] Polling was started
+[DEBUG:2022-09-25 13:45:29,890] execute()
+text: /start
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:45:30,752] ~execute()
+[DEBUG:2022-09-25 13:45:30,752] Dumping system...
+[ERROR:2022-09-25 13:45:30,759] Update:
+{'update_id': 374728239, 'message': {'caption_entities': [], 'new_chat_members': [], 'delete_chat_photo': False, 'chat': {'id': 305197734, 'type': 'private', 'username': 'derevo_prankov', 'last_name': 'N', 'first_name': 'N'}, 'new_chat_photo': [], 'channel_chat_created': False, 'date': 1664102729, 'supergroup_chat_created': False, 'photo': [], 'message_id': 6994, 'text': '/start', 'entities': [{'type': 'bot_command', 'offset': 0, 'length': 6}], 'group_chat_created': False, 'from': {'id': 305197734, 'username': 'derevo_prankov', 'language_code': 'en', 'last_name': 'N', 'first_name': 'N', 'is_bot': False}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 25, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 57, in decorated
+    dump_system(state)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 19, in dump_system
+    state.user_manager_obj.dump(users_path)
+
+Error: 'State' object has no attribute 'user_manager_obj'
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:45:53,927] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:45:54,338] Loaded access_manager from file
+[INFO:2022-09-25 13:45:54,339] Adding handler: <demhack.utils.PermissionHelpText object at 0x103e5c4c0>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.Start object at 0x103e5c4f0>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.Help object at 0x103e5c700>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.Help object at 0x103e5c730>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.GetId object at 0x103e5c6a0>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.utils.PermissionHelpText object at 0x103e5c5e0>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.GetManagers object at 0x103e5c640>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.AddManager object at 0x103e5c790>
+[INFO:2022-09-25 13:45:54,340] Adding handler: <demhack.functions.EraseManager object at 0x103e5c7c0>
+[DEBUG:2022-09-25 13:45:54,340] Polling was started
+[DEBUG:2022-09-25 13:45:57,630] execute()
+text: /start
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:45:58,157] ~execute()
+[DEBUG:2022-09-25 13:45:58,157] Dumping system...
+[DEBUG:2022-09-25 13:45:58,158] Successful!
+[DEBUG:2022-09-25 13:46:00,722] execute()
+text: /help
+user: @derevo_prankov
+[ERROR:2022-09-25 13:46:00,728] Update:
+{'message': {'group_chat_created': False, 'caption_entities': [], 'chat': {'username': 'derevo_prankov', 'id': 305197734, 'last_name': 'N', 'type': 'private', 'first_name': 'N'}, 'new_chat_photo': [], 'supergroup_chat_created': False, 'photo': [], 'message_id': 7004, 'channel_chat_created': False, 'text': '/help', 'delete_chat_photo': False, 'new_chat_members': [], 'date': 1664102760, 'entities': [{'length': 5, 'type': 'bot_command', 'offset': 0}], 'from': {'last_name': 'N', 'language_code': 'en', 'is_bot': False, 'username': 'derevo_prankov', 'first_name': 'N', 'id': 305197734}}, 'update_id': 374728241}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 24, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/bot.py", line 54, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/damn/demhack/demhack/functions.py", line 61, in execute
+    message.reply_text(self.start.help_texts[self.start.access_manager_obj.get_status(
+
+Error: 'Help' object has no attribute 'start'
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:46:23,254] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:46:23,822] Loaded access_manager from file
+[INFO:2022-09-25 13:46:23,824] Adding handler: <demhack.utils.PermissionHelpText object at 0x1062645b0>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.Start object at 0x1062645e0>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.Help object at 0x1062647f0>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.Help object at 0x106264820>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.GetId object at 0x106264790>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.utils.PermissionHelpText object at 0x1062646d0>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.GetManagers object at 0x106264730>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.AddManager object at 0x106264880>
+[INFO:2022-09-25 13:46:23,825] Adding handler: <demhack.functions.EraseManager object at 0x1062648b0>
+[DEBUG:2022-09-25 13:46:23,826] Polling was started
+[DEBUG:2022-09-25 13:46:28,549] execute()
+text: /start
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:29,426] ~execute()
+[DEBUG:2022-09-25 13:46:29,426] Dumping system...
+[DEBUG:2022-09-25 13:46:29,428] Successful!
+[DEBUG:2022-09-25 13:46:31,435] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:31,734] ~execute()
+[DEBUG:2022-09-25 13:46:31,734] Dumping system...
+[DEBUG:2022-09-25 13:46:31,735] Successful!
+[DEBUG:2022-09-25 13:46:33,107] execute()
+text: /get_id
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:33,385] ~execute()
+[DEBUG:2022-09-25 13:46:33,386] Dumping system...
+[DEBUG:2022-09-25 13:46:33,386] Successful!
+[DEBUG:2022-09-25 13:46:35,159] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:35,581] ~execute()
+[DEBUG:2022-09-25 13:46:35,581] Dumping system...
+[DEBUG:2022-09-25 13:46:35,582] Successful!
+[DEBUG:2022-09-25 13:46:36,965] cute_handle()
+text: /add_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:37,264] ~cute_handle()
+[DEBUG:2022-09-25 13:46:37,264] Dumping system...
+[DEBUG:2022-09-25 13:46:37,266] Successful!
+[DEBUG:2022-09-25 13:46:39,201] cute_handle()
+text: /erase_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:39,581] ~cute_handle()
+[DEBUG:2022-09-25 13:46:39,582] Dumping system...
+[DEBUG:2022-09-25 13:46:39,583] Successful!
+[DEBUG:2022-09-25 13:46:53,570] execute()
+text: Что теперь будем делать?
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:54,332] ~execute()
+[DEBUG:2022-09-25 13:46:54,333] Dumping system...
+[DEBUG:2022-09-25 13:46:54,334] Successful!
+[DEBUG:2022-09-25 13:46:55,835] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:56,225] ~execute()
+[DEBUG:2022-09-25 13:46:56,225] Dumping system...
+[DEBUG:2022-09-25 13:46:56,226] Successful!
+[DEBUG:2022-09-25 13:46:57,875] cute_handle()
+text: /add_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:46:58,138] ~cute_handle()
+[DEBUG:2022-09-25 13:46:58,139] Dumping system...
+[DEBUG:2022-09-25 13:46:58,140] Successful!
+[DEBUG:2022-09-25 13:47:01,433] cute_handle()
+text: ksdf
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:47:01,927] ~cute_handle()
+[DEBUG:2022-09-25 13:47:01,928] Dumping system...
+[DEBUG:2022-09-25 13:47:01,928] Successful!
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:47:14,476] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:47:14,960] Loaded access_manager from file
+[INFO:2022-09-25 13:47:14,962] Adding handler: <demhack.utils.PermissionHelpText object at 0x103d684c0>
+[INFO:2022-09-25 13:47:14,962] Adding handler: <demhack.functions.Start object at 0x103d684f0>
+[INFO:2022-09-25 13:47:14,962] Adding handler: <demhack.functions.Help object at 0x103d68700>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.functions.Help object at 0x103d68730>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.functions.GetId object at 0x103d686a0>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.utils.PermissionHelpText object at 0x103d685e0>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.functions.GetManagers object at 0x103d68640>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.functions.AddManager object at 0x103d68790>
+[INFO:2022-09-25 13:47:14,963] Adding handler: <demhack.functions.EraseManager object at 0x103d687c0>
+[DEBUG:2022-09-25 13:47:14,963] Polling was started
+[DEBUG:2022-09-25 13:47:18,233] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:47:18,762] ~execute()
+[DEBUG:2022-09-25 13:47:18,763] Dumping system...
+[DEBUG:2022-09-25 13:47:18,764] Successful!
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:48:28,036] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:48:28,692] Loaded access_manager from file
+[INFO:2022-09-25 13:48:28,694] Adding handler: <demhack.utils.PermissionHelpText object at 0x1023b44f0>
+[INFO:2022-09-25 13:48:28,694] Adding handler: <demhack.functions.Start object at 0x1023b4520>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.Help object at 0x1023b4730>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.Help object at 0x1023b4760>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.GetId object at 0x1023b46d0>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.utils.PermissionHelpText object at 0x1023b4610>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.GetManagers object at 0x1023b4670>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.AddManager object at 0x1023b47c0>
+[INFO:2022-09-25 13:48:28,695] Adding handler: <demhack.functions.EraseManager object at 0x1023b47f0>
+[DEBUG:2022-09-25 13:48:28,695] Polling was started
+[DEBUG:2022-09-25 13:48:29,169] cute_handle()
+text: /add_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:29,642] ~cute_handle()
+[DEBUG:2022-09-25 13:48:29,642] Dumping system...
+[DEBUG:2022-09-25 13:48:29,645] Successful!
+[DEBUG:2022-09-25 13:48:30,978] cute_handle()
+text: /cancel
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:30,979] ~cute_handle() by cancel
+[DEBUG:2022-09-25 13:48:40,703] cute_handle()
+text: /add_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:40,877] ~cute_handle()
+[DEBUG:2022-09-25 13:48:40,878] Dumping system...
+[DEBUG:2022-09-25 13:48:40,878] Successful!
+[DEBUG:2022-09-25 13:48:46,369] cute_handle()
+text: 123
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:46,555] ~cute_handle()
+[DEBUG:2022-09-25 13:48:46,555] Dumping system...
+[DEBUG:2022-09-25 13:48:46,556] Successful!
+[DEBUG:2022-09-25 13:48:49,247] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:49,497] ~execute()
+[DEBUG:2022-09-25 13:48:49,497] Dumping system...
+[DEBUG:2022-09-25 13:48:49,498] Successful!
+[DEBUG:2022-09-25 13:48:58,008] cute_handle()
+text: /erase_manager
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:58,152] ~cute_handle()
+[DEBUG:2022-09-25 13:48:58,152] Dumping system...
+[DEBUG:2022-09-25 13:48:58,153] Successful!
+[DEBUG:2022-09-25 13:48:58,953] cute_handle()
+text: 123
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:48:59,111] ~cute_handle()
+[DEBUG:2022-09-25 13:48:59,112] Dumping system...
+[DEBUG:2022-09-25 13:48:59,113] Successful!
+[DEBUG:2022-09-25 13:49:01,524] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:49:01,776] ~execute()
+[DEBUG:2022-09-25 13:49:01,776] Dumping system...
+[DEBUG:2022-09-25 13:49:01,777] Successful!
+[DEBUG] Bot is offline
+[WARNING:2022-09-25 13:49:58,707] Bot is running now, logging enabled
+[DEBUG:2022-09-25 13:49:59,513] Loaded access_manager from file
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.utils.PermissionHelpText object at 0x1065d85b0>
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.functions.Start object at 0x1065d85e0>
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.functions.Help object at 0x1065d87f0>
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.functions.Help object at 0x1065d8820>
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.functions.GetId object at 0x1065d8790>
+[INFO:2022-09-25 13:49:59,515] Adding handler: <demhack.utils.PermissionHelpText object at 0x1065d86d0>
+[INFO:2022-09-25 13:49:59,516] Adding handler: <demhack.functions.GetManagers object at 0x1065d8730>
+[INFO:2022-09-25 13:49:59,516] Adding handler: <demhack.functions.AddManager object at 0x1065d8880>
+[INFO:2022-09-25 13:49:59,516] Adding handler: <demhack.functions.EraseManager object at 0x1065d88b0>
+[DEBUG:2022-09-25 13:49:59,516] Polling was started
+[DEBUG:2022-09-25 13:50:00,955] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:50:01,544] ~execute()
+[DEBUG:2022-09-25 13:50:01,544] Dumping system...
+[DEBUG:2022-09-25 13:50:01,544] Successful!
+[DEBUG:2022-09-25 13:50:04,723] execute()
+text: Что теперь будем делать?
+user: @derevo_prankov
+[DEBUG:2022-09-25 13:50:05,050] ~execute()
+[DEBUG:2022-09-25 13:50:05,051] Dumping system...
+[DEBUG:2022-09-25 13:50:05,051] Successful!
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[WARNING:2023-02-09 21:44:04,026] Bot is running now, logging enabled
+[DEBUG:2023-02-09 21:44:04,039] Loaded access_manager from file
+[DEBUG] Bot is offline
+[WARNING:2023-02-09 22:26:54,688] Bot is running now, logging enabled
+[DEBUG:2023-02-09 22:26:54,711] Loaded access_manager from file
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.utils.PermissionHelpText object at 0x101d188b0>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.Start object at 0x101d187f0>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.Help object at 0x101d1a950>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.Help object at 0x101d1a980>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.GetId object at 0x101d1a920>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.utils.PermissionHelpText object at 0x101d1a8f0>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.GetManagers object at 0x101d1a8c0>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.AddManager object at 0x101d18fd0>
+[INFO:2023-02-09 22:26:54,718] Adding handler: <demhack.functions.EraseManager object at 0x101d1a890>
+[DEBUG:2023-02-09 22:26:54,718] Polling was started
+[DEBUG] Bot is offline
+[WARNING:2023-02-09 22:27:42,053] Bot is running now, logging enabled
+[DEBUG:2023-02-09 22:27:42,067] Loaded access_manager from file
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.utils.PermissionHelpText object at 0x1060fc910>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.Start object at 0x1060fc850>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.Help object at 0x1060fe9b0>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.Help object at 0x1060fe9e0>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.GetId object at 0x1060fe980>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.utils.PermissionHelpText object at 0x1060fe950>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.GetManagers object at 0x1060fe920>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.AddManager object at 0x1060fd030>
+[INFO:2023-02-09 22:27:42,074] Adding handler: <demhack.functions.EraseManager object at 0x1060fe8f0>
+[DEBUG:2023-02-09 22:27:42,075] Polling was started
+[DEBUG] Bot is offline
+[WARNING:2023-02-09 22:45:04,200] Bot is running now, logging enabled
+[DEBUG:2023-02-09 22:45:04,417] Loaded access_manager from file
+[INFO:2023-02-09 22:45:04,419] Adding handler: <demhack.utils.PermissionHelpText object at 0x103cb0550>
+[INFO:2023-02-09 22:45:04,419] Adding handler: <demhack.functions.Start object at 0x103cb0580>
+[INFO:2023-02-09 22:45:04,419] Adding handler: <demhack.functions.Help object at 0x103cb0790>
+[INFO:2023-02-09 22:45:04,419] Adding handler: <demhack.functions.Help object at 0x103cb07c0>
+[INFO:2023-02-09 22:45:04,419] Adding handler: <demhack.functions.GetId object at 0x103cb0730>
+[INFO:2023-02-09 22:45:04,420] Adding handler: <demhack.utils.PermissionHelpText object at 0x103cb0670>
+[INFO:2023-02-09 22:45:04,420] Adding handler: <demhack.functions.GetManagers object at 0x103cb06d0>
+[INFO:2023-02-09 22:45:04,420] Adding handler: <demhack.functions.AddManager object at 0x103cb0820>
+[INFO:2023-02-09 22:45:04,420] Adding handler: <demhack.functions.EraseManager object at 0x103cb0850>
+[DEBUG:2023-02-09 22:45:04,420] Polling was started
+[DEBUG:2023-02-09 22:45:15,448] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-09 22:45:15,690] ~execute()
+[DEBUG:2023-02-09 22:45:15,690] Dumping system...
+[DEBUG:2023-02-09 22:45:15,691] Successful!
+[DEBUG:2023-02-09 22:45:18,321] execute()
+text: /get_managers
+user: @derevo_prankov
+[DEBUG:2023-02-09 22:45:18,467] ~execute()
+[DEBUG:2023-02-09 22:45:18,467] Dumping system...
+[DEBUG:2023-02-09 22:45:18,468] Successful!
+[DEBUG:2023-02-09 22:45:20,052] execute()
+text: Что теперь будем делать?
+user: @derevo_prankov
+[DEBUG:2023-02-09 22:45:20,198] ~execute()
+[DEBUG:2023-02-09 22:45:20,198] Dumping system...
+[DEBUG:2023-02-09 22:45:20,199] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:00:32,443] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:00:32,676] Loaded access_manager from file
+[INFO:2023-02-10 00:00:32,678] Adding handler: <demhack.utils.PermissionHelpText object at 0x104660880>
+[INFO:2023-02-10 00:00:32,678] Adding handler: <demhack.functions.Start object at 0x1046608b0>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.Help object at 0x104660ac0>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.Help object at 0x104660af0>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.GetId object at 0x104660a60>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.utils.PermissionHelpText object at 0x1046609a0>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.GetManagers object at 0x104660a00>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.AddManager object at 0x104660b50>
+[INFO:2023-02-10 00:00:32,679] Adding handler: <demhack.functions.EraseManager object at 0x104660b80>
+[DEBUG:2023-02-10 00:00:32,679] Polling was started
+[DEBUG:2023-02-10 00:00:38,927] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:00:39,150] ~execute()
+[DEBUG:2023-02-10 00:00:39,150] Dumping system...
+[DEBUG:2023-02-10 00:00:39,155] Successful!
+[DEBUG:2023-02-10 00:01:28,267] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:01:28,479] ~execute()
+[DEBUG:2023-02-10 00:01:28,479] Dumping system...
+[DEBUG:2023-02-10 00:01:28,480] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:06:19,058] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:06:19,294] Loaded access_manager from file
+[INFO:2023-02-10 00:06:19,299] Adding handler: <demhack.utils.PermissionHelpText object at 0x1020707f0>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.Start object at 0x102070820>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.Help object at 0x102070a30>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.Help object at 0x102070a60>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.GetId object at 0x1020709d0>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.utils.PermissionHelpText object at 0x102070910>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.GetManagers object at 0x102070970>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.AddManager object at 0x102070ac0>
+[INFO:2023-02-10 00:06:19,300] Adding handler: <demhack.functions.EraseManager object at 0x102070af0>
+[DEBUG:2023-02-10 00:06:19,301] Polling was started
+[DEBUG:2023-02-10 00:06:35,087] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:06:35,348] ~execute()
+[DEBUG:2023-02-10 00:06:35,349] Dumping system...
+[DEBUG:2023-02-10 00:06:35,350] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:51:16,905] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:51:17,135] Loaded access_manager from file
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.utils.PermissionHelpText object at 0x1046188e0>
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.functions.Help object at 0x1046189a0>
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.functions.GetId object at 0x1046189d0>
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.functions.GetManagers object at 0x104618a30>
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.functions.AddManager object at 0x104618b20>
+[INFO:2023-02-10 00:51:17,137] Adding handler: <demhack.functions.EraseManager object at 0x104618b80>
+[DEBUG:2023-02-10 00:51:17,137] Polling was started
+[DEBUG:2023-02-10 00:51:27,553] execute()
+text: /manager_help
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:51:27,734] ~execute()
+[DEBUG:2023-02-10 00:51:27,735] Dumping system...
+[DEBUG:2023-02-10 00:51:27,736] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:54:31,872] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:54:32,070] Loaded access_manager from file
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.utils.PermissionHelpText object at 0x101eb8a30>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.Help object at 0x101eb8af0>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.GetId object at 0x101eb8b20>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.utils.PermissionHelpText object at 0x101eb8b80>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.GetKeywords object at 0x101eb8ca0>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.AddKeyword object at 0x101eb8cd0>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.EraseKeyword object at 0x101eb8bb0>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.utils.PermissionHelpText object at 0x101eb8e20>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.GetManagers object at 0x101eb8fd0>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.AddManager object at 0x101eb9000>
+[INFO:2023-02-10 00:54:32,071] Adding handler: <demhack.functions.EraseManager object at 0x101eb9060>
+[DEBUG:2023-02-10 00:54:32,072] Polling was started
+[DEBUG:2023-02-10 00:54:36,709] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:54:36,910] ~execute()
+[DEBUG:2023-02-10 00:54:36,911] Dumping system...
+[DEBUG:2023-02-10 00:54:36,911] Successful!
+[DEBUG:2023-02-10 00:54:40,675] execute()
+text: /get_id
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:54:40,759] ~execute()
+[DEBUG:2023-02-10 00:54:40,759] Dumping system...
+[DEBUG:2023-02-10 00:54:40,760] Successful!
+[DEBUG:2023-02-10 00:54:42,473] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:54:42,626] ~execute()
+[DEBUG:2023-02-10 00:54:42,627] Dumping system...
+[DEBUG:2023-02-10 00:54:42,627] Successful!
+[DEBUG:2023-02-10 00:54:44,175] cute_handle()
+text: /add_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:54:44,243] ~cute_handle()
+[DEBUG:2023-02-10 00:54:44,243] Dumping system...
+[DEBUG:2023-02-10 00:54:44,243] Successful!
+[DEBUG:2023-02-10 00:54:46,631] cute_handle()
+text: привет
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:54:46,711] ~cute_handle()
+[DEBUG:2023-02-10 00:54:46,719] Dumping system...
+[DEBUG:2023-02-10 00:54:46,720] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:55:31,469] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:55:31,669] Loaded access_manager from file
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.utils.PermissionHelpText object at 0x106b807f0>
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.functions.Help object at 0x106b808b0>
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.functions.GetId object at 0x106b808e0>
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.utils.PermissionHelpText object at 0x106b80940>
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.functions.GetKeywords object at 0x106b80a60>
+[INFO:2023-02-10 00:55:31,670] Adding handler: <demhack.functions.AddKeyword object at 0x106b80a90>
+[INFO:2023-02-10 00:55:31,671] Adding handler: <demhack.functions.EraseKeyword object at 0x106b80970>
+[INFO:2023-02-10 00:55:31,671] Adding handler: <demhack.utils.PermissionHelpText object at 0x106b80be0>
+[INFO:2023-02-10 00:55:31,671] Adding handler: <demhack.functions.GetManagers object at 0x106b80d90>
+[INFO:2023-02-10 00:55:31,671] Adding handler: <demhack.functions.AddManager object at 0x106b80dc0>
+[INFO:2023-02-10 00:55:31,671] Adding handler: <demhack.functions.EraseManager object at 0x106b80e20>
+[DEBUG:2023-02-10 00:55:31,671] Polling was started
+[DEBUG:2023-02-10 00:55:34,520] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:34,713] ~execute()
+[DEBUG:2023-02-10 00:55:34,713] Dumping system...
+[DEBUG:2023-02-10 00:55:34,714] Successful!
+[DEBUG:2023-02-10 00:55:37,105] cute_handle()
+text: /add_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:37,191] ~cute_handle()
+[DEBUG:2023-02-10 00:55:37,191] Dumping system...
+[DEBUG:2023-02-10 00:55:37,192] Successful!
+[DEBUG:2023-02-10 00:55:44,980] cute_handle()
+text: keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:45,052] ~cute_handle()
+[DEBUG:2023-02-10 00:55:45,052] Dumping system...
+[DEBUG:2023-02-10 00:55:45,053] Successful!
+[DEBUG:2023-02-10 00:55:47,604] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:47,683] ~execute()
+[DEBUG:2023-02-10 00:55:47,684] Dumping system...
+[DEBUG:2023-02-10 00:55:47,684] Successful!
+[DEBUG:2023-02-10 00:55:49,076] cute_handle()
+text: /add_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:49,149] ~cute_handle()
+[DEBUG:2023-02-10 00:55:49,149] Dumping system...
+[DEBUG:2023-02-10 00:55:49,149] Successful!
+[DEBUG:2023-02-10 00:55:51,881] cute_handle()
+text: Keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:51,950] ~cute_handle()
+[DEBUG:2023-02-10 00:55:51,950] Dumping system...
+[DEBUG:2023-02-10 00:55:51,952] Successful!
+[DEBUG:2023-02-10 00:55:54,742] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:55:54,831] ~execute()
+[DEBUG:2023-02-10 00:55:54,832] Dumping system...
+[DEBUG:2023-02-10 00:55:54,832] Successful!
+[DEBUG:2023-02-10 00:56:01,758] cute_handle()
+text: /erase_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:01,848] ~cute_handle()
+[DEBUG:2023-02-10 00:56:01,848] Dumping system...
+[DEBUG:2023-02-10 00:56:01,849] Successful!
+[DEBUG:2023-02-10 00:56:06,270] cute_handle()
+text: keyword
+user: @derevo_prankov
+[ERROR:2023-02-10 00:56:06,273] Update:
+{'update_id': 374728661, 'message': {'caption_entities': [], 'photo': [], 'chat': {'type': 'private', 'id': 305197734, 'first_name': 'N', 'username': 'derevo_prankov', 'last_name': 'N'}, 'channel_chat_created': False, 'date': 1675979766, 'delete_chat_photo': False, 'new_chat_members': [], 'text': 'keyword', 'supergroup_chat_created': False, 'entities': [], 'message_id': 9136, 'new_chat_photo': [], 'group_chat_created': False, 'from': {'username': 'derevo_prankov', 'language_code': 'en', 'last_name': 'N', 'id': 305197734, 'first_name': 'N', 'is_bot': False}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/conversationhandler.py", line 627, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 26, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 42, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/utils.py", line 167, in cute_handle
+    ret = self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/functions.py", line 181, in get_word
+    self.state.parser.erase_keyword(keyword)
+
+Error: 'ChatParser' object has no attribute 'erase_keyword'
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 00:56:24,814] Bot is running now, logging enabled
+[DEBUG:2023-02-10 00:56:25,015] Loaded access_manager from file
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.utils.PermissionHelpText object at 0x1043f47f0>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.Help object at 0x1043f48b0>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.GetId object at 0x1043f48e0>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.utils.PermissionHelpText object at 0x1043f4940>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.GetKeywords object at 0x1043f4a60>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.AddKeyword object at 0x1043f4a90>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.EraseKeyword object at 0x1043f4970>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.utils.PermissionHelpText object at 0x1043f4be0>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.GetManagers object at 0x1043f4d90>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.AddManager object at 0x1043f4dc0>
+[INFO:2023-02-10 00:56:25,016] Adding handler: <demhack.functions.EraseManager object at 0x1043f4e20>
+[DEBUG:2023-02-10 00:56:25,017] Polling was started
+[DEBUG:2023-02-10 00:56:28,848] cute_handle()
+text: /add_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:29,049] ~cute_handle()
+[DEBUG:2023-02-10 00:56:29,049] Dumping system...
+[DEBUG:2023-02-10 00:56:29,050] Successful!
+[DEBUG:2023-02-10 00:56:32,305] cute_handle()
+text: keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:32,379] ~cute_handle()
+[DEBUG:2023-02-10 00:56:32,380] Dumping system...
+[DEBUG:2023-02-10 00:56:32,380] Successful!
+[DEBUG:2023-02-10 00:56:36,046] cute_handle()
+text: /erase_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:36,122] ~cute_handle()
+[DEBUG:2023-02-10 00:56:36,123] Dumping system...
+[DEBUG:2023-02-10 00:56:36,124] Successful!
+[DEBUG:2023-02-10 00:56:37,902] cute_handle()
+text: f
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:37,986] ~cute_handle()
+[DEBUG:2023-02-10 00:56:37,986] Dumping system...
+[DEBUG:2023-02-10 00:56:37,986] Successful!
+[DEBUG:2023-02-10 00:56:43,897] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:44,003] ~execute()
+[DEBUG:2023-02-10 00:56:44,003] Dumping system...
+[DEBUG:2023-02-10 00:56:44,004] Successful!
+[DEBUG:2023-02-10 00:56:49,009] cute_handle()
+text: /erase_keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:49,086] ~cute_handle()
+[DEBUG:2023-02-10 00:56:49,086] Dumping system...
+[DEBUG:2023-02-10 00:56:49,087] Successful!
+[DEBUG:2023-02-10 00:56:49,609] cute_handle()
+text: keyword
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:49,683] ~cute_handle()
+[DEBUG:2023-02-10 00:56:49,683] Dumping system...
+[DEBUG:2023-02-10 00:56:49,684] Successful!
+[DEBUG:2023-02-10 00:56:51,399] execute()
+text: /get_keywords
+user: @derevo_prankov
+[DEBUG:2023-02-10 00:56:51,473] ~execute()
+[DEBUG:2023-02-10 00:56:51,477] Dumping system...
+[DEBUG:2023-02-10 00:56:51,478] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:02:05,637] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:02:05,829] Loaded access_manager from file
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.utils.PermissionHelpText object at 0x10249c8b0>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.Help object at 0x10249c970>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.GetId object at 0x10249c9a0>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.utils.PermissionHelpText object at 0x10249ca00>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.GetKeywords object at 0x10249cb20>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.AddKeyword object at 0x10249cb50>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.EraseKeyword object at 0x10249ca30>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.utils.PermissionHelpText object at 0x10249cca0>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.GetManagers object at 0x10249ce50>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.AddManager object at 0x10249ce80>
+[INFO:2023-02-10 01:02:05,830] Adding handler: <demhack.functions.EraseManager object at 0x10249cee0>
+[DEBUG:2023-02-10 01:02:05,830] Polling was started
+[DEBUG:2023-02-10 01:02:09,647] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:02:09,843] ~execute()
+[DEBUG:2023-02-10 01:02:09,844] Dumping system...
+[DEBUG:2023-02-10 01:02:09,845] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:02:50,883] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:02:51,072] Loaded access_manager from file
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.utils.PermissionHelpText object at 0x105ee88b0>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.Help object at 0x105ee8970>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.GetId object at 0x105ee89a0>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.utils.PermissionHelpText object at 0x105ee8a00>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.GetKeywords object at 0x105ee8b20>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.AddKeyword object at 0x105ee8b50>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.EraseKeyword object at 0x105ee8a30>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.utils.PermissionHelpText object at 0x105ee8ca0>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.GetManagers object at 0x105ee8e50>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.AddManager object at 0x105ee8e80>
+[INFO:2023-02-10 01:02:51,073] Adding handler: <demhack.functions.EraseManager object at 0x105ee8ee0>
+[DEBUG:2023-02-10 01:02:51,073] Polling was started
+[DEBUG:2023-02-10 01:02:51,340] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:02:51,517] ~execute()
+[DEBUG:2023-02-10 01:02:51,517] Dumping system...
+[DEBUG:2023-02-10 01:02:51,518] Successful!
+[DEBUG:2023-02-10 01:02:51,518] execute()
+text: /help@mipt_notify_bot
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:02:51,585] ~execute()
+[DEBUG:2023-02-10 01:02:51,585] Dumping system...
+[DEBUG:2023-02-10 01:02:51,586] Successful!
+[DEBUG:2023-02-10 01:02:53,500] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:02:53,571] ~execute()
+[DEBUG:2023-02-10 01:02:53,571] Dumping system...
+[DEBUG:2023-02-10 01:02:53,572] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:11:47,752] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:11:47,968] Loaded access_manager from file
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.utils.PermissionHelpText object at 0x10225f100>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.functions.Help object at 0x10225f220>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.functions.GetId object at 0x10225f250>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.utils.PermissionHelpText object at 0x10225f2b0>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.functions.GetKeywords object at 0x10225f3d0>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.functions.AddKeyword object at 0x10225f400>
+[INFO:2023-02-10 01:11:47,970] Adding handler: <demhack.functions.EraseKeyword object at 0x10225f2e0>
+[INFO:2023-02-10 01:11:47,971] Adding handler: <demhack.utils.PermissionHelpText object at 0x10225ece0>
+[INFO:2023-02-10 01:11:47,971] Adding handler: <demhack.functions.GetManagers object at 0x10225eb30>
+[INFO:2023-02-10 01:11:47,971] Adding handler: <demhack.functions.AddManager object at 0x10225eb00>
+[INFO:2023-02-10 01:11:47,971] Adding handler: <demhack.functions.EraseManager object at 0x10225eaa0>
+[DEBUG:2023-02-10 01:11:47,971] Polling was started
+[DEBUG:2023-02-10 01:11:49,956] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:11:50,133] ~execute()
+[DEBUG:2023-02-10 01:11:50,134] Dumping system...
+[DEBUG:2023-02-10 01:11:50,136] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:13:22,512] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:13:22,703] Loaded access_manager from file
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.utils.PermissionHelpText object at 0x10686cbb0>
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.functions.Help object at 0x10686ccd0>
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.functions.GetId object at 0x10686cd00>
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.utils.PermissionHelpText object at 0x10686cd60>
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.functions.GetKeywords object at 0x10686ce80>
+[INFO:2023-02-10 01:13:22,704] Adding handler: <demhack.functions.AddKeyword object at 0x10686ceb0>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.EraseKeyword object at 0x10686cd90>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.utils.PermissionHelpText object at 0x10686d000>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.GetChats object at 0x10686d1b0>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.EraseCurrentChat object at 0x10686d1e0>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.utils.PermissionHelpText object at 0x10686d240>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.GetManagers object at 0x10686d2d0>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.AddManager object at 0x10686d300>
+[INFO:2023-02-10 01:13:22,705] Adding handler: <demhack.functions.EraseManager object at 0x10686d360>
+[DEBUG:2023-02-10 01:13:22,705] Polling was started
+[DEBUG:2023-02-10 01:13:24,393] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:13:24,585] ~execute()
+[DEBUG:2023-02-10 01:13:24,585] Dumping system...
+[DEBUG:2023-02-10 01:13:24,587] Successful!
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:13:42,042] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:13:42,247] Loaded access_manager from file
+[INFO:2023-02-10 01:13:42,247] Adding handler: <demhack.utils.PermissionHelpText object at 0x1048fcbb0>
+[INFO:2023-02-10 01:13:42,247] Adding handler: <demhack.functions.Help object at 0x1048fccd0>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.GetId object at 0x1048fcd00>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.utils.PermissionHelpText object at 0x1048fcd60>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.GetKeywords object at 0x1048fce80>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.AddKeyword object at 0x1048fceb0>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.EraseKeyword object at 0x1048fcd90>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.utils.PermissionHelpText object at 0x1048fd000>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.GetChats object at 0x1048fd1b0>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.EraseCurrentChat object at 0x1048fd1e0>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.utils.PermissionHelpText object at 0x1048fd240>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.GetManagers object at 0x1048fd2d0>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.AddManager object at 0x1048fd300>
+[INFO:2023-02-10 01:13:42,248] Adding handler: <demhack.functions.EraseManager object at 0x1048fd360>
+[DEBUG:2023-02-10 01:13:42,248] Polling was started
+[DEBUG:2023-02-10 01:13:43,548] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:13:43,745] ~execute()
+[DEBUG:2023-02-10 01:13:43,746] Dumping system...
+[DEBUG:2023-02-10 01:13:43,749] Successful!
+[DEBUG:2023-02-10 01:13:50,031] execute()
+text: /get_chats
+user: @derevo_prankov
+[ERROR:2023-02-10 01:13:50,034] Update:
+{'update_id': 374728679, 'message': {'message_id': 9177, 'chat': {'all_members_are_administrators': True, 'title': 'HHAHAHAHAHA', 'id': -874392934, 'type': 'group'}, 'photo': [], 'new_chat_members': [], 'caption_entities': [], 'delete_chat_photo': False, 'entities': [{'length': 10, 'type': 'bot_command', 'offset': 0}], 'date': 1675980830, 'channel_chat_created': False, 'supergroup_chat_created': False, 'new_chat_photo': [], 'group_chat_created': False, 'text': '/get_chats', 'from': {'language_code': 'en', 'first_name': 'N', 'username': 'derevo_prankov', 'id': 305197734, 'last_name': 'N', 'is_bot': False}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 26, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 58, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/functions.py", line 194, in execute
+    chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_chats()])
+  File "/Users/nikitanikitin/Activities/demhack/demhack/parser.py", line 18, in get_chats
+    return self.chat_ids
+
+Error: 'ChatParser' object has no attribute 'chat_ids'
+[DEBUG:2023-02-10 01:13:57,436] execute()
+text: /throw_chat
+user: @derevo_prankov
+[ERROR:2023-02-10 01:13:57,437] Update:
+{'update_id': 374728680, 'message': {'message_id': 9181, 'chat': {'all_members_are_administrators': True, 'title': 'HHAHAHAHAHA', 'id': -874392934, 'type': 'group'}, 'photo': [], 'new_chat_members': [], 'caption_entities': [], 'delete_chat_photo': False, 'entities': [{'length': 11, 'type': 'bot_command', 'offset': 0}], 'date': 1675980837, 'channel_chat_created': False, 'supergroup_chat_created': False, 'new_chat_photo': [], 'group_chat_created': False, 'text': '/throw_chat', 'from': {'language_code': 'en', 'first_name': 'N', 'username': 'derevo_prankov', 'id': 305197734, 'last_name': 'N', 'is_bot': False}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 26, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 58, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/functions.py", line 207, in execute
+    self.state.parser.erase_chat(update.message.chat.id)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/parser.py", line 12, in erase_chat
+    for i in range(len(self.chat_ids)):
+
+Error: 'ChatParser' object has no attribute 'chat_ids'
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:14:43,650] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:14:43,839] Loaded access_manager from file
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.utils.PermissionHelpText object at 0x10668f340>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.Help object at 0x10668f3a0>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.GetId object at 0x10668f3d0>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.utils.PermissionHelpText object at 0x10668f430>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.GetKeywords object at 0x10668ee60>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.AddKeyword object at 0x10668ee30>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.EraseKeyword object at 0x10668f460>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.utils.PermissionHelpText object at 0x10668ece0>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.GetChats object at 0x10668eb30>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.EraseCurrentChat object at 0x10668eb00>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.utils.PermissionHelpText object at 0x10668eaa0>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.GetManagers object at 0x10668ea10>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.AddManager object at 0x10668e9e0>
+[INFO:2023-02-10 01:14:43,840] Adding handler: <demhack.functions.EraseManager object at 0x10668e980>
+[DEBUG:2023-02-10 01:14:43,841] Polling was started
+[DEBUG:2023-02-10 01:14:48,376] execute()
+text: /help
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:14:48,568] ~execute()
+[DEBUG:2023-02-10 01:14:48,568] Dumping system...
+[DEBUG:2023-02-10 01:14:48,569] Successful!
+[DEBUG:2023-02-10 01:14:51,253] execute()
+text: /get_chats
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:14:51,362] ~execute()
+[DEBUG:2023-02-10 01:14:51,362] Dumping system...
+[DEBUG:2023-02-10 01:14:51,363] Successful!
+[DEBUG:2023-02-10 01:14:53,085] execute()
+text: /throw_chat
+user: @derevo_prankov
+[DEBUG:2023-02-10 01:14:53,154] ~execute()
+[DEBUG:2023-02-10 01:14:53,154] Dumping system...
+[DEBUG:2023-02-10 01:14:53,155] Successful!
+[DEBUG] Bot is offline
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:40:56,320] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:40:56,522] Loaded access_manager from file
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.AddToChat object at 0x105e64fd0>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.utils.PermissionHelpText object at 0x105e65000>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.Help object at 0x105e65060>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.GetId object at 0x105e65090>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.utils.PermissionHelpText object at 0x105e650f0>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.GetKeywords object at 0x105e65210>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.AddKeyword object at 0x105e65240>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.EraseKeyword object at 0x105e65120>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.utils.PermissionHelpText object at 0x105e65390>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.GetChats object at 0x105e65540>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.EraseCurrentChat object at 0x105e65570>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.utils.PermissionHelpText object at 0x105e655d0>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.GetManagers object at 0x105e65660>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.AddManager object at 0x105e65690>
+[INFO:2023-02-10 01:40:56,523] Adding handler: <demhack.functions.EraseManager object at 0x105e656f0>
+[DEBUG:2023-02-10 01:40:56,523] Polling was started
+[DEBUG] Bot is offline
+[WARNING:2023-02-10 01:41:38,550] Bot is running now, logging enabled
+[DEBUG:2023-02-10 01:41:38,741] Loaded access_manager from file
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.functions.AddToChat object at 0x1066ecf40>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.utils.PermissionHelpText object at 0x1066ecf70>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.functions.Help object at 0x1066ecfd0>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.functions.GetId object at 0x1066ed000>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.utils.PermissionHelpText object at 0x1066ed060>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.functions.GetKeywords object at 0x1066ed180>
+[INFO:2023-02-10 01:41:38,742] Adding handler: <demhack.functions.AddKeyword object at 0x1066ed1b0>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.EraseKeyword object at 0x1066ed090>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.utils.PermissionHelpText object at 0x1066ed300>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.GetChats object at 0x1066ed4b0>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.EraseCurrentChat object at 0x1066ed4e0>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.utils.PermissionHelpText object at 0x1066ed540>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.GetManagers object at 0x1066ed5d0>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.AddManager object at 0x1066ed600>
+[INFO:2023-02-10 01:41:38,743] Adding handler: <demhack.functions.EraseManager object at 0x1066ed660>
+[DEBUG:2023-02-10 01:41:38,743] Polling was started
+[ERROR:2023-02-10 01:41:41,845] Update:
+{'update_id': 374728688, 'my_chat_member': {'chat': {'type': 'group', 'title': 'HHAHAHAHAHA', 'all_members_are_administrators': True, 'id': -874392934}, 'new_chat_member': {'user': {'first_name': 'IT notification', 'is_bot': True, 'id': 5133601045, 'username': 'mipt_notify_bot'}, 'status': 'left', 'until_date': None}, 'old_chat_member': {'user': {'first_name': 'IT notification', 'is_bot': True, 'id': 5133601045, 'username': 'mipt_notify_bot'}, 'status': 'member', 'until_date': None}, 'date': 1675982501, 'from': {'first_name': 'N', 'last_name': 'N', 'is_bot': False, 'language_code': 'en', 'id': 305197734, 'username': 'derevo_prankov'}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 27, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 52, in decorated
+    message = obtain_message(update, state.logger, delete=False)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/utils.py", line 51, in obtain_message
+    message = update.callback_query.message
+
+Error: 'NoneType' object has no attribute 'message'
+[WARNING:2023-02-10 01:41:42,300] Error report was not sent to the user, cause: 'NoneType' object has no attribute 'reply_text'
+[ERROR:2023-02-10 01:42:04,863] Update:
+{'update_id': 374728690, 'my_chat_member': {'chat': {'type': 'group', 'title': 'HHAHAHAHAHA', 'all_members_are_administrators': True, 'id': -874392934}, 'new_chat_member': {'user': {'first_name': 'IT notification', 'is_bot': True, 'id': 5133601045, 'username': 'mipt_notify_bot'}, 'status': 'member', 'until_date': None}, 'old_chat_member': {'user': {'first_name': 'IT notification', 'is_bot': True, 'id': 5133601045, 'username': 'mipt_notify_bot'}, 'status': 'left', 'until_date': None}, 'date': 1675982524, 'from': {'first_name': 'N', 'last_name': 'N', 'is_bot': False, 'language_code': 'en', 'id': 305197734, 'username': 'derevo_prankov'}}}
+
+Trace:
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/Users/nikitanikitin/Activities/demhack/env/lib/python3.10/site-packages/telegram/ext/handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 27, in decorated
+    ret = function(update, context)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/bot.py", line 52, in decorated
+    message = obtain_message(update, state.logger, delete=False)
+  File "/Users/nikitanikitin/Activities/demhack/demhack/utils.py", line 51, in obtain_message
+    message = update.callback_query.message
+
+Error: 'NoneType' object has no attribute 'message'
+[WARNING:2023-02-10 01:42:05,141] Error report was not sent to the user, cause: 'NoneType' object has no attribute 'reply_text'
+[DEBUG] Bot is offline
