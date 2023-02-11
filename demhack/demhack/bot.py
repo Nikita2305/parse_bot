@@ -150,7 +150,7 @@ def declare_globals():
         logger.debug(str(e))
     access_manager_obj.set_status(ADMIN_ID, MANAGER)
 
-    parser = ChatParser()
+    parser = MessageParser()
     try:
         parser = parser.load(parser_path)
         logger.debug("Loaded parser from file")

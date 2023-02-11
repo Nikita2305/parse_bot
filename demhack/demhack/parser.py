@@ -23,16 +23,12 @@ def contains(text, keyword):
         if ok:
             return True
     return False
+
+class MessageSource:
     
-class ChatParser (SystemObject):
-
-    def __init__(self):
+    def __init__(self, parser):
         self.chats = []
-        self.keywords = []
-        self.source = (0, "НЕ НАСТРОЕН")
-
-    def set_source(self, id, descr=""):
-        self.source = (id, descr)
+        self.parser = parser
 
     def add_chat(self, id, descr=""):
         self.chats.append((id, descr))
@@ -52,6 +48,25 @@ class ChatParser (SystemObject):
     def get_chats(self):
         return self.chats
 
+    def put(self, text, chat_id, bot):
+        index = self.find_chat(chat_id)
+        if (index == -1):
+            return
+        chat = self.chats[index]
+        self.parser.process(text, chat[1], bot)
+
+# should be thread-safe
+class MessageParser (SystemObject):
+
+    def __init__(self):
+        self.message_sources = []
+        self.keywords = []
+        self.source = (0, "НЕ НАСТРОЕН")
+        self.allocate_message_source()
+
+    def set_source(self, id, descr=""):
+        self.source = (id, descr)
+
     def add_keyword(self, word):
         self.keywords.append(word.lower())
 
@@ -63,17 +78,20 @@ class ChatParser (SystemObject):
     def get_keywords(self):
         return self.keywords
 
-    def process(self, text, chat_id, bot):
+    def get_default_message_source(self):
+        return self.message_sources[0]
+
+    def allocate_message_source(self):
+        self.message_sources.append(MessageSource(self))
+        return self.message_sources[-1]
+
+    def process(self, text, chat_title, bot):
         if self.source[0] == 0:
             return
         source_chat_id = self.source[0]
-        index = self.find_chat(chat_id)
-        if (index == -1):
-            return
-        chat = self.chats[index]
+        
         for keyword in self.keywords:
             if contains(text, keyword):
-                message = f"Message: {text}\nChat: {chat[1]} \nKeyword: {keyword}"
+                message = f"Message: {text}\nChat: {chat_title} \nKeyword: {keyword}"
                 bot.send_message(source_chat_id, message)
-                return
-        
+                return 

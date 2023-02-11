@@ -54,9 +54,9 @@ class AddToChat(BasicMessage):
         id = update.my_chat_member.chat.id
         title = update.my_chat_member.chat.title
         if (status in [ChatMember.LEFT, ChatMember.RESTRICTED]):
-            self.state.parser.erase_chat(id) 
+            self.state.parser.get_default_message_source().erase_chat(id) 
         elif (status in [ChatMember.MEMBER,ChatMember.CREATOR, ChatMember.ADMINISTRATOR]):
-            self.state.parser.add_chat(id, title)
+            self.state.parser.get_default_message_source().add_chat(id, title)
         else:
             self.state.logger.error(f"Unknown status: {status}")
 
@@ -86,23 +86,6 @@ class GetId (BasicMessage):
     def execute(self, update, context):
         self.state.access_manager_obj.get_status(str(update.effective_user.id), str(update.effective_user.username))
         update.message.reply_text(str(update.effective_user.id))
-
-"""
-class GetManagers (BasicMessage):
-        
-    def __init__(self, *args, **kwargs):
-        self.help_message = "get_managers"
-        self.description = "Получить список менеджеров"
-        self.permissions = MANAGER
-        super().__init__(*args, **kwargs)
-
-    def execute(self, update, context):
-        ret = self.state.access_manager_obj.get_managers()
-        s = "Вот они, сверху вниз:\n"
-        for x in ret:
-            s += "@" + x[1] + " (" + x[0] + ")\n"
-        update.message.reply_text(s)
-"""
 
 class AddManager (BasicDialogue):
 
@@ -145,20 +128,6 @@ class EraseManager (BasicDialogue):
         update.message.reply_text("Удалён " + update.message.text)
         return BasicDialogue.END
 
-"""
-class GetKeywords (BasicMessage):
-        
-    def __init__(self, *args, **kwargs):
-        self.help_message = "get_keywords"
-        self.description = "Получить ключевые слова"
-        self.permissions = MANAGER
-        super().__init__(*args, **kwargs)
-
-    def execute(self, update, context):
-        keywords = "\n".join(self.state.parser.get_keywords())
-        update.message.reply_text(f"Ключевые слова:\n{keywords}")
-"""
-
 class AddKeyword (BasicDialogue):
 
     def __init__(self, *args, **kwargs):
@@ -197,35 +166,6 @@ class EraseKeyword (BasicDialogue):
         update.message.reply_text(f"Удалено слово '{keyword}'")
         return BasicDialogue.END
 
-
-"""
-class GetChats (BasicMessage):
-        
-    def __init__(self, *args, **kwargs):
-        self.help_message = "get_chats"
-        self.description = "Получить список чатов"
-        self.permissions = MANAGER
-        super().__init__(*args, **kwargs)
-
-    def execute(self, update, context):
-        chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_chats()])
-        update.message.reply_text(f"Список чатов:\n{chats}")
-"""
-
-"""
-class EraseCurrentChat (BasicMessage):
-        
-    def __init__(self, *args, **kwargs):
-        self.help_message = "throw_chat"
-        self.description = "Удалить этот чат из выборки"
-        self.permissions = MANAGER
-        super().__init__(*args, **kwargs)
-
-    def execute(self, update, context):
-        self.state.parser.erase_chat(update.message.chat.id)
-        update.message.reply_text(f"Удалён из выборки")
-"""
-
 class ThisIsAdminka (BasicMessage):
         
     def __init__(self, *args, **kwargs):
@@ -235,7 +175,7 @@ class ThisIsAdminka (BasicMessage):
         super().__init__(*args, **kwargs)
 
     def execute(self, update, context):
-        self.state.parser.erase_chat(update.message.chat.id)
+        self.state.parser.get_default_message_source().erase_chat(update.message.chat.id)
         self.state.parser.set_source(update.message.chat.id, update.message.chat.title)
         update.message.reply_text(f"Теперь это админка")
 
@@ -248,7 +188,7 @@ class GetInfo (BasicMessage):
         super().__init__(*args, **kwargs)
 
     def execute(self, update, context): 
-        chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_chats()]) 
+        chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_default_message_source().get_chats()]) 
         keywords = "\n".join(self.state.parser.get_keywords())
         ret = self.state.access_manager_obj.get_managers()
         admins = "\n".join(["@" + x[1] + " (" + x[0] + ")" for x in ret])
@@ -256,7 +196,8 @@ class GetInfo (BasicMessage):
         reply_text = f"Админский чат: {self.state.parser.source[1]}, (id = {self.state.parser.source[0]})\n\n"
         reply_text += f"Ключевые слова:\n{keywords}" + ("\n\n" if keywords else "\n")
         reply_text += f"Список чатов:\n{chats}" + ("\n\n" if chats else "\n")
-        reply_text += f"Список админов:\n{admins}"
+        reply_text += f"Список админов:\n{admins}" + ("\n\n" if admins else "\n")
+        reply_text += f"Помощь: /help"
         update.message.reply_text(reply_text) 
 
 class ParseTextMessage (BasicMessage):
@@ -270,4 +211,57 @@ class ParseTextMessage (BasicMessage):
     def execute(self, update, context):
         id = update.message.chat.id
         text = update.message.text
-        self.state.parser.process(text, id, Bot(BOT_KEY))
+        self.state.parser.get_default_message_source().put(text, id, Bot(BOT_KEY))
+
+"""
+class GetKeywords (BasicMessage):
+        
+    def __init__(self, *args, **kwargs):
+        self.help_message = "get_keywords"
+        self.description = "Получить ключевые слова"
+        self.permissions = MANAGER
+        super().__init__(*args, **kwargs)
+
+    def execute(self, update, context):
+        keywords = "\n".join(self.state.parser.get_keywords())
+        update.message.reply_text(f"Ключевые слова:\n{keywords}")
+
+class GetChats (BasicMessage):
+        
+    def __init__(self, *args, **kwargs):
+        self.help_message = "get_chats"
+        self.description = "Получить список чатов"
+        self.permissions = MANAGER
+        super().__init__(*args, **kwargs)
+
+    def execute(self, update, context):
+        chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_chats()])
+        update.message.reply_text(f"Список чатов:\n{chats}")
+
+class EraseCurrentChat (BasicMessage):
+        
+    def __init__(self, *args, **kwargs):
+        self.help_message = "throw_chat"
+        self.description = "Удалить этот чат из выборки"
+        self.permissions = MANAGER
+        super().__init__(*args, **kwargs)
+
+    def execute(self, update, context):
+        self.state.parser.erase_chat(update.message.chat.id)
+        update.message.reply_text(f"Удалён из выборки")
+
+class GetManagers (BasicMessage):
+        
+    def __init__(self, *args, **kwargs):
+        self.help_message = "get_managers"
+        self.description = "Получить список менеджеров"
+        self.permissions = MANAGER
+        super().__init__(*args, **kwargs)
+
+    def execute(self, update, context):
+        ret = self.state.access_manager_obj.get_managers()
+        s = "Вот они, сверху вниз:\n"
+        for x in ret:
+            s += "@" + x[1] + " (" + x[0] + ")\n"
+        update.message.reply_text(s)
+"""
