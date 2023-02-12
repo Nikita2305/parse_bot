@@ -4,6 +4,7 @@ from demhack.functions import *
 from demhack.log_config import *
 from demhack.parser import *
 from functools import wraps
+from demhack.account import *
 
 from telegram.ext import (
     Updater,
@@ -18,6 +19,7 @@ def dump_system(state):
     state.logger.debug("Dumping system...") 
     state.access_manager_obj.dump(manager_path)
     state.parser.dump(parser_path)
+    state.account_handler.dump(account_handler_path)
     state.logger.debug("Successful!")
 
 # deprecated menu_sender
@@ -62,17 +64,18 @@ def access_decorator(function, state):
 
 class State:
     
-    def __init__(self, logger, access_manager_obj, permissions, help_texts, parser):
+    def __init__(self, logger, access_manager_obj, permissions, help_texts, parser, account_handler):
         self.logger = logger
         self.access_manager_obj = access_manager_obj
         self.permissions = permissions
         self.help_texts = help_texts 
         self.parser = parser
+        self.account_handler = account_handler
 
 def useless_f(update, context):
     pass
 
-def main(logger, access_manager_obj, parser):
+def main(logger, access_manager_obj, parser, account_handler):
     updater = Updater(BOT_KEY, use_context=True)
     dp = updater.dispatcher
     scenarios = [
@@ -90,6 +93,9 @@ def main(logger, access_manager_obj, parser):
 
         PermissionHelpText("\n*SETTINGS:*\n", MANAGER), 
 
+        AddAccount(),
+        EraseAccount(),
+
         AddKeyword(),
         EraseKeyword(),
 
@@ -102,7 +108,7 @@ def main(logger, access_manager_obj, parser):
     help_texts = {USER: "", MANAGER: ""}
     permissions = {USER: [], MANAGER: []} 
  
-    state = State(logger, access_manager_obj, permissions, help_texts, parser)
+    state = State(logger, access_manager_obj, permissions, help_texts, parser, account_handler)
  
     for new_obj in scenarios:
         state.logger.info(f"Adding handler: {new_obj}")
@@ -133,6 +139,8 @@ def main(logger, access_manager_obj, parser):
     error_handler.configure_globals(state) 
     dp.add_error_handler(error_handler.execute)
 
+    state.account_handler.run_all()
+
     logger.debug("Polling was started")
     updater.start_polling()
     updater.idle()
@@ -156,8 +164,15 @@ def declare_globals():
         logger.debug("Loaded parser from file")
     except Exception as e: 
         logger.debug(str(e))
-    
-    return logger, access_manager_obj, parser
+   
+    account_handler = AccountHandler()
+    try:
+        account_handler = account_handler.load(account_handler_path)
+        logger.debug("Loaded accounts from file")
+    except Exception as e: 
+        logger.debug(str(e))
+ 
+    return logger, access_manager_obj, parser, account_handler
     
 
 # Any function wrapped with one of {access, cancel}_decorator to

@@ -1,6 +1,8 @@
 from demhack.utils import SystemObject
 import pymorphy2
 import string
+from demhack.log_config import BOT_KEY
+from telegram import Bot
 
 def get_tokens(text):
     analyser = pymorphy2.MorphAnalyzer()    
@@ -11,6 +13,7 @@ def get_tokens(text):
 def contains(text, keyword):
     text_tokens = get_tokens(text)
     keyword_tokens = get_tokens(keyword)
+    print(text_tokens, keyword_tokens)
     count = len(text_tokens) - len(keyword_tokens) + 1
     if (count <= 0):
         return False
@@ -48,21 +51,20 @@ class MessageSource:
     def get_chats(self):
         return self.chats
 
-    def put(self, text, chat_id, bot):
+    def put(self, text, chat_id):
         index = self.find_chat(chat_id)
         if (index == -1):
             return
         chat = self.chats[index]
-        self.parser.process(text, chat[1], bot)
+        self.parser.process(text, chat[1])
 
 # should be thread-safe
 class MessageParser (SystemObject):
 
     def __init__(self):
-        self.message_sources = []
+        self.default_source = self.allocate_message_source()
         self.keywords = []
-        self.source = (0, "НЕ НАСТРОЕН")
-        self.allocate_message_source()
+        self.source = (0, "НЕ НАСТРОЕН") 
 
     def set_source(self, id, descr=""):
         self.source = (id, descr)
@@ -79,19 +81,21 @@ class MessageParser (SystemObject):
         return self.keywords
 
     def get_default_message_source(self):
-        return self.message_sources[0]
+        return self.default_source
 
     def allocate_message_source(self):
-        self.message_sources.append(MessageSource(self))
-        return self.message_sources[-1]
+        return MessageSource(self)
 
-    def process(self, text, chat_title, bot):
+    def process(self, text, chat_title):
+        print(text, chat_title, self.keywords, self.source)
         if self.source[0] == 0:
             return
         source_chat_id = self.source[0]
-        
+ 
         for keyword in self.keywords:
+            print(keyword)
             if contains(text, keyword):
+                print(message)
                 message = f"Message: {text}\nChat: {chat_title} \nKeyword: {keyword}"
-                bot.send_message(source_chat_id, message)
+                Bot(BOT_KEY).send_message(source_chat_id, message)
                 return 

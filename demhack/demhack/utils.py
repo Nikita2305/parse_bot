@@ -23,6 +23,7 @@ from telegram import (
 
 manager_path = os.path.dirname(__file__) + "/state/access_manager.txt"
 parser_path = os.path.dirname(__file__) + "/state/parser.txt"
+account_handler_path = os.path.dirname(__file__) + "/state/accounts.txt"
 ADMIN_ID = "305197734"
 
 ARROWe = u'\U00002B07'

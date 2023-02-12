@@ -2,8 +2,10 @@ from datetime import datetime
 from demhack.utils import *
 from demhack.access_manager import *
 from demhack.log_config import BOT_KEY
+from demhack.account import Account, AccountInfo
 import traceback
 import os
+
 
 from telegram.ext import (
     CommandHandler,
@@ -179,6 +181,7 @@ class ThisIsAdminka (BasicMessage):
         self.state.parser.set_source(update.message.chat.id, update.message.chat.title)
         update.message.reply_text(f"Теперь это админка")
 
+# TODO: fix info!
 class GetInfo (BasicMessage):
         
     def __init__(self, *args, **kwargs):
@@ -211,7 +214,63 @@ class ParseTextMessage (BasicMessage):
     def execute(self, update, context):
         id = update.message.chat.id
         text = update.message.text
-        self.state.parser.get_default_message_source().put(text, id, Bot(BOT_KEY))
+        self.state.parser.get_default_message_source().put(text, id)
+
+class AddAccount (BasicDialogue):
+
+    def __init__(self, *args, **kwargs):
+        self.help_message = "add_account"
+        self.description = "Добавить аккаунт"
+        self.permissions = MANAGER
+        self.order = [
+            SimpleHelloUnit("Придумайте nickname (или /cancel)",
+                            entry_message=self.help_message),
+            DialogueUnit(self.get_nickname),
+            DialogueUnit(self.get_app_id),
+            DialogueUnit(self.get_api_hash)
+        ]
+        super().__init__(*args, **kwargs)
+
+    def get_nickname(self, update, context):
+        context.user_data["nickname"] = update.message.text
+        update.message.reply_text(f"Введите app_id (или /cancel)")
+        return BasicDialogue.NEXT
+
+    def get_app_id(self, update, context):
+        context.user_data["app_id"] = update.message.text
+        update.message.reply_text(f"Введите api_hash (или /cancel)")
+        return BasicDialogue.NEXT
+
+    def get_api_hash(self, update, context):
+        nickname = context.user_data["nickname"]
+        app_id = context.user_data["app_id"]
+        api_hash = update.message.text
+        acc_info = AccountInfo(nickname, app_id, api_hash)
+        new_message_source = self.state.parser.allocate_message_source()
+        account = Account(acc_info, new_message_source)
+        self.state.account_handler.add_account(account)
+        update.message.reply_text(f"Добавлен аккаунт {nickname}")
+        account.run()
+        return BasicDialogue.END
+
+class EraseAccount (BasicDialogue):
+
+    def __init__(self, *args, **kwargs):
+        self.help_message = "erase_account"
+        self.description = "Удалить аккаунт"
+        self.permissions = MANAGER
+        self.order = [
+            SimpleHelloUnit("Введите ник удаляемого (или /cancel)",
+                            entry_message=self.help_message),
+            DialogueUnit(self.get_nickname)
+        ]
+        super().__init__(*args, **kwargs)
+
+    def get_nickname(self, update, context):
+        nickname = update.message.text
+        self.state.account_handler.erase_account(nickname)
+        update.message.reply_text(f"Удален аккаунт {nickname}")
+        return BasicDialogue.END
 
 """
 class GetKeywords (BasicMessage):
