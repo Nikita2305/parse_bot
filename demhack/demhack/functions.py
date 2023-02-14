@@ -232,7 +232,9 @@ class AddAccount (BasicDialogue):
                             entry_message=self.help_message),
             DialogueUnit(self.get_phone),
             DialogueUnit(self.get_app_id),
-            DialogueUnit(self.get_api_hash)
+            DialogueUnit(self.get_api_hash),
+            DialogueUnit(self.solve_problem_1),
+            DialogueUnit(self.solve_problem_2)
         ]
         super().__init__(*args, **kwargs)
 
@@ -252,16 +254,61 @@ class AddAccount (BasicDialogue):
         return BasicDialogue.NEXT
 
     def get_api_hash(self, update, context):
-        phone = context.user_data["phone"]
-        app_id = context.user_data["app_id"]
-        api_hash = update.message.text
-        acc_info = AccountInfo(phone, app_id, api_hash)
+        context.user_data["api_hash"] = update.message.text
+        acc_info = self.create_account_info(update, context)
+        problem = ""
+        if (acc_info.needs_code()):
+            problem = "code"
+        elif (acc_info.needs_password()):
+            problem = "password"
+        else:
+            self.create_account(update, context)
+            return BasicDialogue.END
+        context.user_data["problem"] = problem
+        update.message.reply_text(f"Введите {problem}")
+        return BasicDialogue.NEXT 
+       
+    def solve_problem_1(self, update, context):
+        problem = context.user_data["problem"] 
+        solution = update.message.text
+        acc_info = self.create_account_info(update, context)
+        if (problem == "code"):
+            acc_info.provide_with_code(solution)
+        if (problem == "password"):
+            acc_info.provide_with_password(solution)
+        
+        if (acc_info.is_ready()):
+            self.create_account(update, context)
+            return BasicDialogue.END
+        elif (problem == "code" and acc_info.needs_password()):
+            update.message.reply_text(f"Введите {problem}")
+            return BasicDialogue.NEXT
+
+        update.message.reply_text(f"Ошибка, неверный ввод")
+        return BasicDialogue.END
+        
+    def solve_problem_2(self, update, context):
+        solution = update.message.text
+        acc_info = self.create_account_info(update, context)
+        acc_info.provide_with_password(solution)
+        
+        if (acc_info.is_ready()):
+            self.create_account(update, context)
+            return BasicDialogue.END
+
+        update.message.reply_text(f"Ошибка, неверный ввод")
+        return BasicDialogue.END
+
+    def create_account(self, update, context):
+        acc_info = self.create_account_info()
         new_message_source = self.state.parser.allocate_message_source()
         account = Account(acc_info, new_message_source)
         self.state.account_handler.add_account(account)
         update.message.reply_text(f"Добавлен аккаунт {phone}")
         account.run()
-        return BasicDialogue.END
+
+    def create_account_info(self, update, context):
+        return AccountInfo(context.user_data["phone"], context.user_data["app_id"], context.user_data["api_hash"])
 
 class EraseAccount (BasicDialogue):
 

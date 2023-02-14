@@ -3,6 +3,7 @@ import pymorphy2
 import string
 from demhack.log_config import BOT_KEY
 from telegram import Bot
+import threading
 
 def get_tokens(text):
     analyser = pymorphy2.MorphAnalyzer()    
@@ -57,36 +58,45 @@ class MessageSource:
         chat = self.chats[index]
         self.parser.process(text, chat[1])
 
-# should be thread-safe
 class MessageParser (SystemObject):
 
     def __init__(self):
         self.default_source = self.allocate_message_source()
         self.keywords = []
-        self.source = (0, "НЕ НАСТРОЕН") 
+        self.source = (0, "НЕ НАСТРОЕН")
+        self.mutex = threading.Lock()
 
     def set_source(self, id, descr=""):
+        self.mutex.acquire()
         self.source = (id, descr)
+        self.mutex.release()
 
     def add_keyword(self, word):
+        self.mutex.acquire()
         self.keywords.append(word.lower())
+        self.mutex.release()
 
     def erase_keyword(self, word):
+        self.mutex.acquire()
         if word not in self.keywords:
+            self.mutex.release()
             return
         self.keywords.pop(self.keywords.index(word))
+        self.mutex.release()
     
     def get_keywords(self):
         return self.keywords
 
-    def get_default_message_source(self):
+    def get_default_message_source(self): 
         return self.default_source
 
     def allocate_message_source(self):
         return MessageSource(self)
 
     def process(self, text, chat_title):
+        self.mutex.acquire()
         if self.source[0] == 0:
+            self.mutex.release()
             return
         source_chat_id = self.source[0]
  
@@ -94,4 +104,6 @@ class MessageParser (SystemObject):
             if contains(text, keyword):
                 message = f"Message: {text}\nChat: {chat_title} \nKeyword: {keyword}"
                 Bot(BOT_KEY).send_message(source_chat_id, message)
-                return 
+                self.mutex.release()
+                return
+        self.mutex.release()

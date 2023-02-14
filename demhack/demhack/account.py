@@ -1,29 +1,57 @@
-from demhack.utils import SystemObject
+from demhack.utils import SystemObject, DATABASE_ENC_KEY
+from telegram_simple.client import Telegram, AuthorizationState
 import threading
 
 class AccountInfo:
     def __init__(self, phone, app_id, api_hash):
         self.phone = phone
         self.app_id = app_id
-        self.api_hash = api_hash 
+        self.api_hash = api_hash
+        self.tg = Telegram(api_id=app_id, api_hash=api_hash, phone=phone, database_encryption_key=DATABASE_ENC_KEY)
+        self.relogin()        
+
+    def needs_code(self):
+        return self.tg.authorization_state == AuthorizationState.WAIT_CODE
+
+    def provide_with_code(self, code):
+        tg.send_code(code)
+        self.relogin()
+
+    def needs_password(self):
+        return self.tg.authorization_state == AuthorizationState.WAIT_PASSWORD
+
+    def provide_with_password(self, password):
+        tg.send_password(password)
+        self.relogin()
+
+    def is_ready(self):
+         return self.tg.authorization_state == AuthorizationState.READY
+
+    def relogin(self):
+        self.tg.login(blocking=False)
 
 class Account:
 
     def __init__(self, account_info, message_source):
         self.account_info = account_info
         self.source = message_source
+        self.source.add_chat(123) # TODO
 
     def run(self):
         thread = threading.Thread(target=self.event_loop)
         thread.daemon = True
-        thread.start()
-        
+        thread.start() 
+    
+    def event_loop(self):
+        self.account_info.tg.add_message_handler(self.message_handler)
+        self.account_info.tg.idle()
+
+    def message_handler(self, update):
         # self.source.put("hello world from code", 123) # дёргаем за ручку
         # self.source.add_chat(id, title) # дергаем за другую ручку
         # self.source.erase_chat(id, title) # дергаем за третью ручку
-    
-    def event_loop(self):
-        return
+        print(update)
+        self.source.put(len(str(update)), 123)
 
 class AccountHandler (SystemObject):
 
