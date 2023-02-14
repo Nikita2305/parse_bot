@@ -139,6 +139,7 @@ def main(logger, access_manager_obj, parser, account_handler):
     error_handler.configure_globals(state) 
     dp.add_error_handler(error_handler.execute)
 
+    state.account_handler.setup_with_parser(state.parser) # problem of references + jsonpickle
     state.account_handler.run_all()
 
     logger.debug("Polling was started")

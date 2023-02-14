@@ -181,7 +181,6 @@ class ThisIsAdminka (BasicMessage):
         self.state.parser.set_source(update.message.chat.id, update.message.chat.title)
         update.message.reply_text(f"Теперь это админка")
 
-# TODO: fix info!
 class GetInfo (BasicMessage):
         
     def __init__(self, *args, **kwargs):
@@ -195,10 +194,16 @@ class GetInfo (BasicMessage):
         keywords = "\n".join(self.state.parser.get_keywords())
         ret = self.state.access_manager_obj.get_managers()
         admins = "\n".join(["@" + x[1] + " (" + x[0] + ")" for x in ret])
+        accounts_chats = ""
+        for account in self.state.account_handler.get_accounts():
+            accounts_chats += f"---{account.account_info.phone}---\n"
+            for chat in account.source.get_chats():
+                accounts_chats += f"{chat[1]} (id = chat[0])\n" 
 
         reply_text = f"Админский чат: {self.state.parser.source[1]}, (id = {self.state.parser.source[0]})\n\n"
         reply_text += f"Ключевые слова:\n{keywords}" + ("\n\n" if keywords else "\n")
-        reply_text += f"Список чатов:\n{chats}" + ("\n\n" if chats else "\n")
+        reply_text += f"Список чатов бота:\n{chats}" + ("\n\n" if chats else "\n")
+        reply_text += f"Список доп. чатов:\n{accounts_chats}\n"
         reply_text += f"Список админов:\n{admins}" + ("\n\n" if admins else "\n")
         reply_text += f"Помощь: /help"
         update.message.reply_text(reply_text) 
@@ -223,33 +228,38 @@ class AddAccount (BasicDialogue):
         self.description = "Добавить аккаунт"
         self.permissions = MANAGER
         self.order = [
-            SimpleHelloUnit("Придумайте nickname (или /cancel)",
+            SimpleHelloUnit("Введите телефон, как при регистрации (или /cancel)",
                             entry_message=self.help_message),
-            DialogueUnit(self.get_nickname),
+            DialogueUnit(self.get_phone),
             DialogueUnit(self.get_app_id),
             DialogueUnit(self.get_api_hash)
         ]
         super().__init__(*args, **kwargs)
 
-    def get_nickname(self, update, context):
-        context.user_data["nickname"] = update.message.text
+    def get_phone(self, update, context):
+        context.user_data["phone"] = update.message.text
         update.message.reply_text(f"Введите app_id (или /cancel)")
         return BasicDialogue.NEXT
 
     def get_app_id(self, update, context):
-        context.user_data["app_id"] = update.message.text
+        try:
+            int(update.message.text.strip())
+        except Exception:
+            update.message.reply_text("Введите число - app_id")
+            return BasicDialogue.END
+        context.user_data["app_id"] = int(update.message.text.strip())
         update.message.reply_text(f"Введите api_hash (или /cancel)")
         return BasicDialogue.NEXT
 
     def get_api_hash(self, update, context):
-        nickname = context.user_data["nickname"]
+        phone = context.user_data["phone"]
         app_id = context.user_data["app_id"]
         api_hash = update.message.text
-        acc_info = AccountInfo(nickname, app_id, api_hash)
+        acc_info = AccountInfo(phone, app_id, api_hash)
         new_message_source = self.state.parser.allocate_message_source()
         account = Account(acc_info, new_message_source)
         self.state.account_handler.add_account(account)
-        update.message.reply_text(f"Добавлен аккаунт {nickname}")
+        update.message.reply_text(f"Добавлен аккаунт {phone}")
         account.run()
         return BasicDialogue.END
 
@@ -260,16 +270,16 @@ class EraseAccount (BasicDialogue):
         self.description = "Удалить аккаунт"
         self.permissions = MANAGER
         self.order = [
-            SimpleHelloUnit("Введите ник удаляемого (или /cancel)",
+            SimpleHelloUnit("Введите телефон удаляемого (или /cancel)",
                             entry_message=self.help_message),
-            DialogueUnit(self.get_nickname)
+            DialogueUnit(self.get_phone)
         ]
         super().__init__(*args, **kwargs)
 
-    def get_nickname(self, update, context):
-        nickname = update.message.text
-        self.state.account_handler.erase_account(nickname)
-        update.message.reply_text(f"Удален аккаунт {nickname}")
+    def get_phone(self, update, context):
+        phone = update.message.text
+        self.state.account_handler.erase_account(phone)
+        update.message.reply_text(f"Удален аккаунт {phone}")
         return BasicDialogue.END
 
 """

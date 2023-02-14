@@ -13,7 +13,6 @@ def get_tokens(text):
 def contains(text, keyword):
     text_tokens = get_tokens(text)
     keyword_tokens = get_tokens(keyword)
-    print(text_tokens, keyword_tokens)
     count = len(text_tokens) - len(keyword_tokens) + 1
     if (count <= 0):
         return False
@@ -87,15 +86,12 @@ class MessageParser (SystemObject):
         return MessageSource(self)
 
     def process(self, text, chat_title):
-        print(text, chat_title, self.keywords, self.source)
         if self.source[0] == 0:
             return
         source_chat_id = self.source[0]
  
         for keyword in self.keywords:
-            print(keyword)
             if contains(text, keyword):
-                print(message)
                 message = f"Message: {text}\nChat: {chat_title} \nKeyword: {keyword}"
                 Bot(BOT_KEY).send_message(source_chat_id, message)
                 return 
