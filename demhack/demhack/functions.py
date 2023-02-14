@@ -255,15 +255,19 @@ class AddAccount (BasicDialogue):
 
     def get_api_hash(self, update, context):
         context.user_data["api_hash"] = update.message.text
+        
         acc_info = self.create_account_info(update, context)
         problem = ""
         if (acc_info.needs_code()):
             problem = "code"
         elif (acc_info.needs_password()):
             problem = "password"
-        else:
+        acc_info.stop()
+
+        if (problem == ""):
             self.create_account(update, context)
             return BasicDialogue.END
+        
         context.user_data["problem"] = problem
         update.message.reply_text(f"Введите {problem}")
         return BasicDialogue.NEXT 
@@ -278,12 +282,14 @@ class AddAccount (BasicDialogue):
             acc_info.provide_with_password(solution)
         
         if (acc_info.is_ready()):
+            acc_info.stop()
             self.create_account(update, context)
             return BasicDialogue.END
         elif (problem == "code" and acc_info.needs_password()):
-            update.message.reply_text(f"Введите {problem}")
+            acc_info.stop()
+            update.message.reply_text(f"Введите password")
             return BasicDialogue.NEXT
-
+        acc_info.stop()
         update.message.reply_text(f"Ошибка, неверный ввод")
         return BasicDialogue.END
         
@@ -291,11 +297,11 @@ class AddAccount (BasicDialogue):
         solution = update.message.text
         acc_info = self.create_account_info(update, context)
         acc_info.provide_with_password(solution)
-        
         if (acc_info.is_ready()):
+            acc_info.stop()
             self.create_account(update, context)
             return BasicDialogue.END
-
+        acc_info.stop()
         update.message.reply_text(f"Ошибка, неверный ввод")
         return BasicDialogue.END
 

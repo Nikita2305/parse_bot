@@ -7,8 +7,8 @@ class AccountInfo:
         self.phone = phone
         self.app_id = app_id
         self.api_hash = api_hash
-        self.tg = Telegram(api_id=app_id, api_hash=api_hash, phone=phone, database_encryption_key=DATABASE_ENC_KEY)
-        self.relogin()        
+        self.tg = Telegram(api_id=app_id, api_hash=api_hash, phone=phone, database_encryption_key="changekey123")
+        self.relogin()
 
     def needs_code(self):
         return self.tg.authorization_state == AuthorizationState.WAIT_CODE
@@ -30,6 +30,9 @@ class AccountInfo:
     def relogin(self):
         self.tg.login(blocking=False)
 
+    def stop(self):
+        self.tg.stop()
+
 class Account:
 
     def __init__(self, account_info, message_source):
@@ -45,6 +48,8 @@ class Account:
     def event_loop(self):
         self.account_info.tg.add_message_handler(self.message_handler)
         self.account_info.tg.idle()
+        print("stopped")
+        self.account_info.tg.stop()
 
     def message_handler(self, update):
         # self.source.put("hello world from code", 123) # дёргаем за ручку
