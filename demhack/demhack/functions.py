@@ -271,7 +271,6 @@ class AddAccount (BasicDialogue):
         account = Account(acc_info, new_message_source)
         self.state.account_handler.add_account(account)
         update.message.reply_text(f"Добавлен аккаунт {acc_info.phone}")
-        account.run()
 
     def create_account_info(self, update, context):
         return AccountInfo(context.user_data["phone"], context.user_data["app_id"], context.user_data["api_hash"])

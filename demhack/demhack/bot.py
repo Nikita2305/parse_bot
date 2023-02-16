@@ -5,6 +5,7 @@ from demhack.log_config import *
 from demhack.parser import *
 from functools import wraps
 from demhack.account import *
+import multiprocessing
 
 from telegram.ext import (
     Updater,
@@ -181,5 +182,6 @@ def declare_globals():
 # automatically sends menu, when cancel or finish of dialogue
 
 if __name__ == '__main__':
+    multiprocessing.freeze_support()
     args = declare_globals() 
     main(*args)

@@ -1,6 +1,7 @@
 from demhack.utils import SystemObject, DATABASE_ENC_KEY
 from telegram_simple.client import Telegram, AuthorizationState
 import threading
+import multiprocessing
 
 class AccountInfo:
     def __init__(self, phone, app_id, api_hash):
@@ -37,37 +38,42 @@ class AccountInfo:
         session.stop()
 """
 
-# The idea here is to add multiprocessing
-# Add here thread with server that is waiting for put/add_chat/erase_chat
-# That also enables add_chat/erase_chat from the bot interface
 class Account:
 
     def __init__(self, account_info, message_source):
         self.account_info = account_info
         self.source = message_source
+        self.queue = multiprocessing.Queue()
+        self.is_active = True
+        self.process = None 
         self.source.add_chat(123) # TODO
 
-    def run(self): 
+    def run(self):
         thread = threading.Thread(target=self.server_event_loop)
         thread.daemon = True
         thread.start()
-        process = multiprocessing.Process(target=self.client_event_loop)
-        process.start()
-   
+        self.process = multiprocessing.Process(target=self.client_event_loop)
+        self.process.start()
+  
+    def stop(self):
+        self.is_active = False
+        self.process.terminate()
+ 
     def server_event_loop(self):
-        pass
-        # here we run thread with server and call self.server_message_handler
+        while (self.is_active):
+            try:
+                update = self.queue.get(timeout=10)
+            except TimeoutError:
+                continue
+            self.server_message_handler(update)
 
     def client_event_loop(self):
-        # here we run process with account
         session = self.account_info.get_session()
         session.add_message_handler(self.client_message_handler)
         session.idle()
-        session.stop() # probably no need
 
-    def client_message_handler(self):
-        pass
-        # sends to server side
+    def client_message_handler(self, update):
+        self.queue.put(update)
 
     def server_message_handler(self, update):
         # self.source.put("hello world from code", 123) # дёргаем за ручку
@@ -85,11 +91,13 @@ class AccountHandler (SystemObject):
         if (self.find_account(account.account_info.phone) != -1):
             return
         self.accounts.append(account)
+        account.run()
 
     def erase_account(self, phone):
         index = self.find_account(phone)
         if (index != -1):
             return
+        self.accounts[index].stop()
         self.accounts.pop(index)
 
     def find_account(self, phone):
