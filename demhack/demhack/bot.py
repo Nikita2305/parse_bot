@@ -18,9 +18,20 @@ from telegram.ext import (
 
 def dump_system(state):
     state.logger.debug("Dumping system...") 
+    
     state.access_manager_obj.dump(manager_path)
+    
     state.parser.dump(parser_path)
+
+    # fixing jsonpiclke trouble. consider use fail_safe parameter
+    queues = []
+    for account in state.account_handler.accounts:
+        queues.append(account.queue)
+        account.queue = None
     state.account_handler.dump(account_handler_path)
+    for account, queue in zip(state.account_handler.accounts, queues):
+        account.queue = queue
+
     state.logger.debug("Successful!")
 
 # deprecated menu_sender

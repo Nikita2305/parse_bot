@@ -2,6 +2,8 @@ from demhack.utils import SystemObject, DATABASE_ENC_KEY
 from telegram_simple.client import Telegram, AuthorizationState
 import threading
 import multiprocessing
+import time
+import queue
 
 class AccountInfo:
     def __init__(self, phone, app_id, api_hash):
@@ -43,16 +45,18 @@ class Account:
     def __init__(self, account_info, message_source):
         self.account_info = account_info
         self.source = message_source
-        self.queue = multiprocessing.Queue()
+        self.queue = multiprocessing.Queue() # None btw 
         self.is_active = True
         self.process = None 
-        self.source.add_chat(123) # TODO
-
+    
     def run(self):
+        if (not self.account_info.is_ready()):
+            raise RuntimeError(f"Not Ready account {self.account_info.phone}")
         thread = threading.Thread(target=self.server_event_loop)
         thread.daemon = True
         thread.start()
         self.process = multiprocessing.Process(target=self.client_event_loop)
+        self.daemon = True
         self.process.start()
   
     def stop(self):
@@ -60,15 +64,19 @@ class Account:
         self.process.terminate()
  
     def server_event_loop(self):
-        while (self.is_active):
-            try:
-                update = self.queue.get(timeout=10)
-            except TimeoutError:
-                continue
-            self.server_message_handler(update)
+        try:
+            while (self.is_active):
+                try:
+                    update = self.queue.get(timeout=10)
+                    self.server_message_handler(update)
+                except queue.Empty:
+                    continue
+        except Exception as ex:
+            print(f"serverside error {ex}")
 
     def client_event_loop(self):
         session = self.account_info.get_session()
+        session.login(blocking=False)
         session.add_message_handler(self.client_message_handler)
         session.idle()
 
@@ -77,10 +85,14 @@ class Account:
 
     def server_message_handler(self, update):
         # self.source.put("hello world from code", 123) # дёргаем за ручку
-        # self.source.add_chat(id, title) # дергаем за другую ручку
-        # self.source.erase_chat(id, title) # дергаем за третью ручку
-        print(update)
-        self.source.put(len(str(update)), 123)
+        # self.source.add_chat(id, title) # дергаем за другую ручку # TODO
+        # self.source.erase_chat(id, title) # дергаем за третью ручку # TODO
+
+        message_content = update['message']['content']
+        if message_content['@type'] == 'messageText': 
+            message_text = message_content.get('text', {}).get('text', '').lower()
+            chat_id = update['message']['chat_id']
+            self.source.put(message_text, chat_id)
 
 class AccountHandler (SystemObject):
 
@@ -112,6 +124,7 @@ class AccountHandler (SystemObject):
     def setup_with_parser(self, parser):
         for account in self.accounts:
             account.source.parser = parser
+            account.queue = multiprocessing.Queue()
 
     def run_all(self):
         for account in self.accounts:

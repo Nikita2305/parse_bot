@@ -21,6 +21,29 @@ def do_it():
         database_encryption_key=DATABASE_ENC_KEY,
     )
 
+    state = tg.login(blocking=False)
+
+    print('Authorization state: %s' % state)
+
+    if state != AuthorizationState.READY:
+        return
+    
+    result = tg.get_me()
+    result.wait()
+    print(result.update)
+
+    tg.add_message_handler(print_handler)
+    tg.idle()
+    tg.stop()
+
+if __name__ == '__main__': 
+    tg = Telegram(
+        api_id=API_ID,
+        api_hash=API_HASH,
+        phone=PHONE,
+        database_encryption_key=DATABASE_ENC_KEY,
+    )
+
     # you must call login method before others
     state = tg.login(blocking=False)
 
@@ -41,12 +64,8 @@ def do_it():
 
     print('Authorization state: %s' % tg.authorization_state)
 
-    tg.add_message_handler(print_handler)
-    tg.idle()
     tg.stop()
 
-if __name__ == '__main__': 
     T = multiprocessing.Process(target=do_it)
     T.start()
     T.join()
-
