@@ -7,32 +7,39 @@ class AccountInfo:
         self.phone = phone
         self.app_id = app_id
         self.api_hash = api_hash
-        self.tg = Telegram(api_id=app_id, api_hash=api_hash, phone=phone, database_encryption_key="changekey123")
-        self.relogin()
 
-    def needs_code(self):
-        return self.tg.authorization_state == AuthorizationState.WAIT_CODE
+    def get_session(self):
+        return Telegram(
+                    api_id=self.app_id,
+                    api_hash=self.api_hash,
+                    phone=self.phone,
+                    database_encryption_key=DATABASE_ENC_KEY
+        )
 
-    def provide_with_code(self, code):
-        tg.send_code(code)
-        self.relogin()
-
-    def needs_password(self):
-        return self.tg.authorization_state == AuthorizationState.WAIT_PASSWORD
-
-    def provide_with_password(self, password):
-        tg.send_password(password)
-        self.relogin()
+    def get_state(self):
+        session = self.get_session()
+        state = session.login(blocking=False)
+        session.stop()
+        return state
 
     def is_ready(self):
-         return self.tg.authorization_state == AuthorizationState.READY
+        return self.get_state() == AuthorizationState.READY 
 
-    def relogin(self):
-        self.tg.login(blocking=False)
+"""
+    def provide_with_code(self, code):
+        session = self.get_session()
+        session.send_code(code)
+        session.stop()
 
-    def stop(self):
-        self.tg.stop()
+    def provide_with_password(self, password):
+        session = self.get_session()
+        session.send_password(password)
+        session.stop()
+"""
 
+# The idea here is to add multiprocessing
+# Add here thread with server that is waiting for put/add_chat/erase_chat
+# That also enables add_chat/erase_chat from the bot interface
 class Account:
 
     def __init__(self, account_info, message_source):
@@ -40,18 +47,29 @@ class Account:
         self.source = message_source
         self.source.add_chat(123) # TODO
 
-    def run(self):
-        thread = threading.Thread(target=self.event_loop)
+    def run(self): 
+        thread = threading.Thread(target=self.server_event_loop)
         thread.daemon = True
-        thread.start() 
-    
-    def event_loop(self):
-        self.account_info.tg.add_message_handler(self.message_handler)
-        self.account_info.tg.idle()
-        print("stopped")
-        self.account_info.tg.stop()
+        thread.start()
+        process = multiprocessing.Process(target=self.client_event_loop)
+        process.start()
+   
+    def server_event_loop(self):
+        pass
+        # here we run thread with server and call self.server_message_handler
 
-    def message_handler(self, update):
+    def client_event_loop(self):
+        # here we run process with account
+        session = self.account_info.get_session()
+        session.add_message_handler(self.client_message_handler)
+        session.idle()
+        session.stop() # probably no need
+
+    def client_message_handler(self):
+        pass
+        # sends to server side
+
+    def server_message_handler(self, update):
         # self.source.put("hello world from code", 123) # дёргаем за ручку
         # self.source.add_chat(id, title) # дергаем за другую ручку
         # self.source.erase_chat(id, title) # дергаем за третью ручку

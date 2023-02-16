@@ -198,7 +198,7 @@ class GetInfo (BasicMessage):
         for account in self.state.account_handler.get_accounts():
             accounts_chats += f"---{account.account_info.phone}---\n"
             for chat in account.source.get_chats():
-                accounts_chats += f"{chat[1]} (id = chat[0])\n" 
+                accounts_chats += f"{chat[1]} (id = {chat[0]})\n" 
 
         reply_text = f"Админский чат: {self.state.parser.source[1]}, (id = {self.state.parser.source[0]})\n\n"
         reply_text += f"Ключевые слова:\n{keywords}" + ("\n\n" if keywords else "\n")
@@ -232,9 +232,9 @@ class AddAccount (BasicDialogue):
                             entry_message=self.help_message),
             DialogueUnit(self.get_phone),
             DialogueUnit(self.get_app_id),
-            DialogueUnit(self.get_api_hash),
-            DialogueUnit(self.solve_problem_1),
-            DialogueUnit(self.solve_problem_2)
+            DialogueUnit(self.get_api_hash) # ,
+            # DialogueUnit(self.solve_problem_1),
+            # DialogueUnit(self.solve_problem_2)
         ]
         super().__init__(*args, **kwargs)
 
@@ -257,36 +257,48 @@ class AddAccount (BasicDialogue):
         context.user_data["api_hash"] = update.message.text
         
         acc_info = self.create_account_info(update, context)
-        problem = ""
-        if (acc_info.needs_code()):
-            problem = "code"
-        elif (acc_info.needs_password()):
-            problem = "password"
-        acc_info.stop()
 
-        if (problem == ""):
+        if (acc_info.is_ready()):
             self.create_account(update, context)
-            return BasicDialogue.END
-        
-        context.user_data["problem"] = problem
-        update.message.reply_text(f"Введите {problem}")
-        return BasicDialogue.NEXT 
-       
+        else:
+            update.message.reply_text(f"Аккаунт не определён на сервере, обратитесь к админу. Проблема: {problem}")
+
+        return BasicDialogue.END
+
+    def create_account(self, update, context):
+        acc_info = self.create_account_info(update, context)
+        new_message_source = self.state.parser.allocate_message_source()
+        account = Account(acc_info, new_message_source)
+        self.state.account_handler.add_account(account)
+        update.message.reply_text(f"Добавлен аккаунт {acc_info.phone}")
+        account.run()
+
+    def create_account_info(self, update, context):
+        return AccountInfo(context.user_data["phone"], context.user_data["app_id"], context.user_data["api_hash"])
+
+"""
     def solve_problem_1(self, update, context):
         problem = context.user_data["problem"] 
         solution = update.message.text
+        print(f"{problem}: {solution}")
         acc_info = self.create_account_info(update, context)
+        print("created")
         if (problem == "code"):
             acc_info.provide_with_code(solution)
         if (problem == "password"):
             acc_info.provide_with_password(solution)
-        
+        print("provided")
         if (acc_info.is_ready()):
+            print("ready")
             acc_info.stop()
+            print("stopped")
             self.create_account(update, context)
+            print("created")
             return BasicDialogue.END
         elif (problem == "code" and acc_info.needs_password()):
+            print("needs pass")
             acc_info.stop()
+            print("stopped")
             update.message.reply_text(f"Введите password")
             return BasicDialogue.NEXT
         acc_info.stop()
@@ -303,18 +315,8 @@ class AddAccount (BasicDialogue):
             return BasicDialogue.END
         acc_info.stop()
         update.message.reply_text(f"Ошибка, неверный ввод")
-        return BasicDialogue.END
-
-    def create_account(self, update, context):
-        acc_info = self.create_account_info()
-        new_message_source = self.state.parser.allocate_message_source()
-        account = Account(acc_info, new_message_source)
-        self.state.account_handler.add_account(account)
-        update.message.reply_text(f"Добавлен аккаунт {phone}")
-        account.run()
-
-    def create_account_info(self, update, context):
-        return AccountInfo(context.user_data["phone"], context.user_data["app_id"], context.user_data["api_hash"])
+        return BasicDialogue.END 
+"""
 
 class EraseAccount (BasicDialogue):
 
