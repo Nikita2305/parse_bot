@@ -4,6 +4,7 @@ import string
 from demhack.log_config import BOT_KEY
 from telegram import Bot
 import threading
+import copy
 
 def get_tokens(text):
     analyser = pymorphy2.MorphAnalyzer()    
@@ -32,15 +33,21 @@ class MessageSource:
     def __init__(self, parser):
         self.chats = []
         self.parser = parser
+        self.mutex = threading.Lock()
 
     def add_chat(self, id, descr=""):
+        self.mutex.acquire()
         self.chats.append((id, descr))
+        self.mutex.release()
 
     def erase_chat(self, id):
+        self.mutex.acquire()
         index = self.find_chat(id)
         if (index == -1):
+            self.mutex.release()
             return
         self.chats.pop(index) 
+        self.mutex.release()
 
     def find_chat(self, id):
         for i in range(len(self.chats)):
@@ -49,13 +56,19 @@ class MessageSource:
         return -1
 
     def get_chats(self):
-        return self.chats
+        self.mutex.acquire()
+        chats = copy.deepcopy(self.chats)
+        self.mutex.release()
+        return chats
 
     def put(self, text, chat_id):
+        self.mutex.acquire()
         index = self.find_chat(chat_id)
         if (index == -1):
+            self.mutex.release()
             return
-        chat = self.chats[index]
+        chat = copy.deepcopy(self.chats[index])
+        self.mutex.release()
         self.parser.process(text, chat[1])
 
 class MessageParser (SystemObject):

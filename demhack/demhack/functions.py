@@ -239,17 +239,18 @@ class AddAccount (BasicDialogue):
         super().__init__(*args, **kwargs)
 
     def get_phone(self, update, context):
-        context.user_data["phone"] = update.message.text
+        phone = update.message.text.strip()
+        context.user_data["phone"] = phone
         update.message.reply_text(f"Введите app_id (или /cancel)")
         return BasicDialogue.NEXT
 
     def get_app_id(self, update, context):
         try:
-            int(update.message.text.strip())
+            app_id = int(update.message.text.strip())
         except Exception:
             update.message.reply_text("Введите число - app_id")
             return BasicDialogue.END
-        context.user_data["app_id"] = int(update.message.text.strip())
+        context.user_data["app_id"] = app_id
         update.message.reply_text(f"Введите api_hash (или /cancel)")
         return BasicDialogue.NEXT
 

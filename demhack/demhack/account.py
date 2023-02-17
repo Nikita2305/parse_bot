@@ -10,6 +10,7 @@ class AccountInfo:
         self.phone = phone
         self.app_id = app_id
         self.api_hash = api_hash
+        self.id = None
 
     def get_session(self):
         return Telegram(
@@ -26,7 +27,15 @@ class AccountInfo:
         return state
 
     def is_ready(self):
-        return self.get_state() == AuthorizationState.READY 
+        return self.get_state() == AuthorizationState.READY
+
+    def calculate_id(self):
+        session = self.get_session()
+        session.login(blocking=False)
+        result = session.get_me()
+        result.wait()
+        self.id = result.update["id"]
+        session.stop()
 
 """
     def provide_with_code(self, code):
@@ -52,6 +61,7 @@ class Account:
     def run(self):
         if (not self.account_info.is_ready()):
             raise RuntimeError(f"Not Ready account {self.account_info.phone}")
+        self.account_info.calculate_id()
         thread = threading.Thread(target=self.server_event_loop)
         thread.daemon = True
         thread.start()
@@ -75,24 +85,35 @@ class Account:
             print(f"serverside error {ex}")
 
     def client_event_loop(self):
-        session = self.account_info.get_session()
-        session.login(blocking=False)
-        session.add_message_handler(self.client_message_handler)
-        session.idle()
+        self.session = self.account_info.get_session()
+        self.session.login(blocking=False)
+        self.session.add_message_handler(self.client_message_handler)
+        self.session.idle()
 
     def client_message_handler(self, update):
+        message_content = update['message']['content']
+        type = message_content['@type']
+        if (type == 'messageChatAddMembers' and (self.account_info.id in message_content["member_user_ids"]) or type == 'messageChatJoinByLink'):
+            result = self.session.get_chat(update['message']['chat_id'])
+            result.wait() 
+            chat_descr = result.update
+            update['message']['chat_title'] = chat_descr['title']
         self.queue.put(update)
 
     def server_message_handler(self, update):
-        # self.source.put("hello world from code", 123) # дёргаем за ручку
-        # self.source.add_chat(id, title) # дергаем за другую ручку # TODO
-        # self.source.erase_chat(id, title) # дергаем за третью ручку # TODO
-
         message_content = update['message']['content']
-        if message_content['@type'] == 'messageText': 
+        type = message_content['@type']
+        if type == 'messageText': 
             message_text = message_content.get('text', {}).get('text', '').lower()
             chat_id = update['message']['chat_id']
             self.source.put(message_text, chat_id)
+        elif (type == 'messageChatAddMembers' and (self.account_info.id in message_content["member_user_ids"]) or
+              type == 'messageChatJoinByLink'):
+            id = update['message']['chat_id']
+            chat_title = update['message']['chat_title']
+            self.source.add_chat(id, chat_title)
+        elif type == 'messageChatDeleteMember' and self.account_info.id == message_content["user_id"]:
+            self.source.erase_chat(update['message']['chat_id'])
 
 class AccountHandler (SystemObject):
 
@@ -107,7 +128,7 @@ class AccountHandler (SystemObject):
 
     def erase_account(self, phone):
         index = self.find_account(phone)
-        if (index != -1):
+        if (index == -1):
             return
         self.accounts[index].stop()
         self.accounts.pop(index)

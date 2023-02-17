@@ -41,4 +41,9 @@ if __name__ == '__main__':
     # tg.add_message_handler(new_message_handler)
     # tg.add_any_update_handler(print_handler)
     # tg.idle()
+    
+    result = tg.get_me()
+    result.wait()
+    print(result.update)
+
     tg.stop()
