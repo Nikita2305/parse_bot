@@ -396,7 +396,7 @@ class AddAccount (BasicDialogue):
         if (acc_info.is_ready()):
             self.create_account(update, context)
         else:
-            update.message.reply_text(f"Аккаунт не определён на сервере, обратитесь к админу. Проблема: {problem}")
+            update.message.reply_text(f"Аккаунт не определён на сервере, обратитесь к админу.")
 
         return BasicDialogue.END
 

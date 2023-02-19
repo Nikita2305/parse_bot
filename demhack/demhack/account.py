@@ -107,8 +107,8 @@ class Account:
             message_text = message_content.get('text', {}).get('text', '').lower()
             chat_id = update['message']['chat_id']
             self.source.put(message_text, chat_id)
-        elif (type == 'messageChatAddMembers' and (self.account_info.id in message_content["member_user_ids"]) or
-              type == 'messageChatJoinByLink'):
+        elif ((type in ['messageChatAddMembers', 'messageChatJoinByLink']) and update["message"]["is_outgoing"]):
+            # WAS: and (self.account_info.id in message_content["member_user_ids"]))
             id = update['message']['chat_id']
             chat_title = update['message']['chat_title']
             self.source.add_chat(id, chat_title)
