@@ -71,6 +71,10 @@ class MessageSource:
         self.mutex.release()
         self.parser.process(text, chat[1])
 
+    def unlock(self):
+        if (self.mutex.locked()):
+            self.mutex.release()
+
 class MessageParser (SystemObject):
 
     def __init__(self):
@@ -120,3 +124,8 @@ class MessageParser (SystemObject):
                 self.mutex.release()
                 return
         self.mutex.release()
+
+    def unlock_all(self):
+        if (self.mutex.locked()):
+            self.mutex.release()
+        self.default_source.unlock()

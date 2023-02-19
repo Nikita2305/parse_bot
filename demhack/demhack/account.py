@@ -150,3 +150,7 @@ class AccountHandler (SystemObject):
     def run_all(self):
         for account in self.accounts:
             account.run()
+
+    def unlock_all(self):
+        for account in self.accounts:
+            account.source.unlock()

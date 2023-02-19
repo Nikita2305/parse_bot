@@ -86,15 +86,13 @@ class Guide (BasicMessage):
         super().__init__(*args, **kwargs)
 
     def execute(self, update, context):
-        guide = (
+        guide = "\n".join([
             'Guide:',
             '1. Первоначальная настройка бота: добавить бота в админский чат и нажать /this_is_adminka в этом чате. Чтобы дать кому-то (допустим Ване) полномочия работать с ботом, нужно узнать его айдишник в телеграме (Ваня должен нажать /get_id), а затем админ должен нажать /add_manager и добавить ванин айдишник.\n',
             '2. Добавление телеграм-аккаунта для парсинга в три этапа: получить api_id, api_hash по этому гайду https://docs.telethon.dev/en/stable/basic/signing-in.html. Затем отправить phone, api_id, и api_hash тех. специалисту - он авторизует аккаунт на сервере. Затем нажать /add_account и следовать инструкциям.\n',
             '3. Работа с ботом осуществляется посредствам двух видов команд: работа с ключевыми словами (/add_keyword, /erase_keyword) и работа с чатами (/add_chat, /erase_chat). Если вы нажали /add_keyword а затем передумали его добавлять, нажмите /cancel. Это прервёт диалог добавления слова и позволит корректно начать новый диалог.'
-        )
+        ])
         update.message.reply_text(guide)
-
-
 
 class GetId (BasicMessage):
         
@@ -181,7 +179,7 @@ class AddChat (BasicDialogue):
     def get_chat_id(self, update, context): 
         source_str = context.user_data["source"]
         source_obj = self.state.parser.get_default_message_source()
-        if (source_str != '/bot')
+        if (source_str != '/bot'):
             account_ind = self.state.account_handler.find_account(source_str)
             if (account_ind == -1):
                 update.message.reply_text(f"Не найден такой телефон")
@@ -205,7 +203,7 @@ class AddChat (BasicDialogue):
             chat_pairs += [(id, descr)]
 
         for id, descr in chat_pairs:
-            source.add_chat(id, descr)
+            source_obj.add_chat(id, descr)
         update.message.reply_text("Добавлены!")
         return BasicDialogue.END
 
@@ -236,7 +234,7 @@ class EraseChat (BasicDialogue):
     def get_chat_id(self, update, context): 
         source_str = context.user_data["source"]
         source_obj = self.state.parser.get_default_message_source()
-        if (source_str != '/bot')
+        if (source_str != '/bot'):
             account_ind = self.state.account_handler.find_account(source_str)
             if (account_ind == -1):
                 update.message.reply_text(f"Не найден такой телефон")
@@ -255,7 +253,7 @@ class EraseChat (BasicDialogue):
             chat_ids += [id]
 
         for id in chat_ids:
-            source.erase_chat(id)
+            source_obj.erase_chat(id)
         update.message.reply_text("Удалены!")
         return BasicDialogue.END
 
@@ -354,6 +352,7 @@ class ParseTextMessage (BasicMessage):
             text = update.message.text
         except Exception as ex:
             self.state.logger.debug(f"ParseMessageFromBot: {ex}")
+            return
         self.state.parser.get_default_message_source().put(text, id)
 
 class AddAccount (BasicDialogue):
