@@ -93,26 +93,30 @@ def main(logger, access_manager_obj, parser, account_handler):
     scenarios = [
         AddToChat(ChatMemberHandler(useless_f, ChatMemberHandler.MY_CHAT_MEMBER), show_help=False),
  
-        PermissionHelpText("\n*MANAGER HELP:*\n", MANAGER),
+        PermissionHelpText("\n*HELP:*\n", MANAGER),
 
         Help(),
         GetId(), 
         ThisIsAdminka(),
+        Guide(),
 
         PermissionHelpText("\n", MANAGER),
     
         GetInfo(),
 
-        PermissionHelpText("\n*SETTINGS:*\n", MANAGER), 
+        PermissionHelpText("\n*SETTINGS:*\n", MANAGER),  
 
-        AddAccount(),
-        EraseAccount(),
-
-        AddKeyword(),
         EraseKeyword(),
+        AddKeyword(), 
 
-        AddManager(),
+        EraseChat(),
+        AddChat(),
+
+        EraseAccount(),
+        AddAccount(), 
+
         EraseManager(),
+        AddManager(), 
 
         ParseTextMessage(handler=MessageHandler(Filters.text & ~Filters.command, useless_f), show_help=False)
     ]

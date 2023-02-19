@@ -77,6 +77,25 @@ class Help (BasicMessage):
                             ],
         parse_mode=ParseMode.MARKDOWN)
 
+class Guide (BasicMessage):
+        
+    def __init__(self, *args, **kwargs):
+        self.help_message = "guide"
+        self.description = "Гайд по использованию"
+        self.permissions = MANAGER
+        super().__init__(*args, **kwargs)
+
+    def execute(self, update, context):
+        guide = (
+            'Guide:',
+            '1. Первоначальная настройка бота: добавить бота в админский чат и нажать /this_is_adminka в этом чате. Чтобы дать кому-то (допустим Ване) полномочия работать с ботом, нужно узнать его айдишник в телеграме (Ваня должен нажать /get_id), а затем админ должен нажать /add_manager и добавить ванин айдишник.\n',
+            '2. Добавление телеграм-аккаунта для парсинга в три этапа: получить api_id, api_hash по этому гайду https://docs.telethon.dev/en/stable/basic/signing-in.html. Затем отправить phone, api_id, и api_hash тех. специалисту - он авторизует аккаунт на сервере. Затем нажать /add_account и следовать инструкциям.\n',
+            '3. Работа с ботом осуществляется посредствам двух видов команд: работа с ключевыми словами (/add_keyword, /erase_keyword) и работа с чатами (/add_chat, /erase_chat). Если вы нажали /add_keyword а затем передумали его добавлять, нажмите /cancel. Это прервёт диалог добавления слова и позволит корректно начать новый диалог.'
+        )
+        update.message.reply_text(guide)
+
+
+
 class GetId (BasicMessage):
         
     def __init__(self, *args, **kwargs):
@@ -126,8 +145,118 @@ class EraseManager (BasicDialogue):
         super().__init__(*args, **kwargs)
 
     def get_id(self, update, context):
-        self.state.access_manager_obj.set_status(update.message.text, USER)
-        update.message.reply_text("Удалён " + update.message.text)
+        try:
+            id = int(update.message.text)
+        except Exception as ex:
+            update.message.reply_text("Необходимо число")
+            return BasicDialogue.END
+        self.state.access_manager_obj.set_status(id, USER)
+        update.message.reply_text(f"Удалён {id}")
+        return BasicDialogue.END
+
+class AddChat (BasicDialogue):
+
+    def __init__(self, *args, **kwargs):
+        self.help_message = "add_chat"
+        self.description = "Добавить чат(ы)"
+        self.permissions = MANAGER
+        self.order = [
+            SimpleHelloUnit("Введите номер телефона (можно нажать и /bot, это нужно для работы с чатами бота, а не аккаунта) (или /cancel)",
+                            entry_message=self.help_message),
+            DialogueUnit(self.get_source),
+            DialogueUnit(self.get_chat_id)
+        ]
+        super().__init__(*args, **kwargs)
+
+    def get_source(self, update, context):
+        source = update.message.text.strip()
+        context.user_data["source"] = source
+        if (source == '/bot' or
+            (source in [account.account_info.phone for account in self.state.account_handler.get_accounts()])):
+            update.message.reply_text("Введите чат(ы) в следующем формате:\nchat_id chat_name. Чтобы добавить несколько чатов, можно отправить одно сообщение из нескольких строк в таком формате.")
+            return BasicDialogue.NEXT
+        update.message.reply_text("Не найден такой телефон.")
+        return BasicDialogue.END
+
+    def get_chat_id(self, update, context): 
+        source_str = context.user_data["source"]
+        source_obj = self.state.parser.get_default_message_source()
+        if (source_str != '/bot')
+            account_ind = self.state.account_handler.find_account(source_str)
+            if (account_ind == -1):
+                update.message.reply_text(f"Не найден такой телефон")
+                return BasicDialogue.END
+            account = self.state.account_handler.accounts[account_ind]
+            source_obj = account.source
+
+        chats = update.message.text.split("\n")
+        chat_pairs = []
+        for chat_descr in chats:
+            units = chat_descr.strip().split()
+            if (len(units) != 2):
+                update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
+                return BasicDialogue.END
+            try:
+                id = int(units[0])
+                descr = units[1]
+            except Exception as ex:
+                update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
+                return BasicDialogue.END
+            chat_pairs += [(id, descr)]
+
+        for id, descr in chat_pairs:
+            source.add_chat(id, descr)
+        update.message.reply_text("Добавлены!")
+        return BasicDialogue.END
+
+class EraseChat (BasicDialogue):
+
+    def __init__(self, *args, **kwargs):
+        self.help_message = "erase_chat"
+        self.description = "Удалить чат(ы)"
+        self.permissions = MANAGER
+        self.order = [
+            SimpleHelloUnit("Введите номер телефона (можно нажать и /bot, это нужно для работы с чатами бота, а не аккаунта) (или /cancel)",
+                            entry_message=self.help_message),
+            DialogueUnit(self.get_source),
+            DialogueUnit(self.get_chat_id)
+        ]
+        super().__init__(*args, **kwargs)
+
+    def get_source(self, update, context):
+        source = update.message.text.strip()
+        context.user_data["source"] = source
+        if (source == '/bot' or
+            (source in [account.account_info.phone for account in self.state.account_handler.get_accounts()])):
+            update.message.reply_text("Введите число chat_id. Чтобы удалить несколько чатов, можно отправить одно сообщение из нескольких строк в таком формате.")
+            return BasicDialogue.NEXT
+        update.message.reply_text("Не найден такой телефон.")
+        return BasicDialogue.END
+
+    def get_chat_id(self, update, context): 
+        source_str = context.user_data["source"]
+        source_obj = self.state.parser.get_default_message_source()
+        if (source_str != '/bot')
+            account_ind = self.state.account_handler.find_account(source_str)
+            if (account_ind == -1):
+                update.message.reply_text(f"Не найден такой телефон")
+                return BasicDialogue.END
+            account = self.state.account_handler.accounts[account_ind]
+            source_obj = account.source
+
+        chats = update.message.text.split("\n")
+        chat_ids = []
+        for chat_descr in chats:
+            try:
+                id = int(chat_descr.strip())
+            except Exception as ex:
+                update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
+                return BasicDialogue.END
+            chat_ids += [id]
+
+        for id in chat_ids:
+            source.erase_chat(id)
+        update.message.reply_text("Удалены!")
         return BasicDialogue.END
 
 class AddKeyword (BasicDialogue):
@@ -145,6 +274,9 @@ class AddKeyword (BasicDialogue):
 
     def get_word(self, update, context):
         keyword = update.message.text
+        if (keyword.startswith("/")):
+            update.message.reply_text(f"Не стоит добавлять '{keyword}' в качестве ключевого")
+            return BasicDialogue.END
         self.state.parser.add_keyword(keyword)
         update.message.reply_text(f"Добавлено слово '{keyword}'")
         return BasicDialogue.END
@@ -190,7 +322,7 @@ class GetInfo (BasicMessage):
         super().__init__(*args, **kwargs)
 
     def execute(self, update, context): 
-        chats = "\n".join([f"{chat[1]} (id = {chat[0]})" for chat in self.state.parser.get_default_message_source().get_chats()]) 
+        chats = "\n".join([f"{chat[1]} ({chat[0]})" for chat in self.state.parser.get_default_message_source().get_chats()]) 
         keywords = "\n".join(self.state.parser.get_keywords())
         ret = self.state.access_manager_obj.get_managers()
         admins = "\n".join(["@" + x[1] + " (" + x[0] + ")" for x in ret])
@@ -198,9 +330,9 @@ class GetInfo (BasicMessage):
         for account in self.state.account_handler.get_accounts():
             accounts_chats += f"---{account.account_info.phone}---\n"
             for chat in account.source.get_chats():
-                accounts_chats += f"{chat[1]} (id = {chat[0]})\n" 
+                accounts_chats += f"{chat[1]} ({chat[0]})\n" 
 
-        reply_text = f"Админский чат: {self.state.parser.source[1]}, (id = {self.state.parser.source[0]})\n\n"
+        reply_text = f"Админский чат: {self.state.parser.source[1]}, ({self.state.parser.source[0]})\n\n"
         reply_text += f"Ключевые слова:\n{keywords}" + ("\n\n" if keywords else "\n")
         reply_text += f"Список чатов бота:\n{chats}" + ("\n\n" if chats else "\n")
         reply_text += f"Список доп. чатов:\n{accounts_chats}\n"
@@ -217,8 +349,11 @@ class ParseTextMessage (BasicMessage):
         super().__init__(*args, **kwargs)
 
     def execute(self, update, context):
-        id = update.message.chat.id
-        text = update.message.text
+        try:
+            id = update.message.chat.id
+            text = update.message.text
+        except Exception as ex:
+            self.state.logger.debug(f"ParseMessageFromBot: {ex}")
         self.state.parser.get_default_message_source().put(text, id)
 
 class AddAccount (BasicDialogue):

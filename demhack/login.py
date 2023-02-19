@@ -4,12 +4,13 @@ from pprint import pprint
 
 from telegram_simple.client import Telegram, AuthorizationState
 
-PHONE = "89131436601"
-API_ID = "23102544"
-API_HASH = "5a76e0acf22357bd7c4f073439560a14"
 DATABASE_ENC_KEY = "vk_parse_bot_1234"
 
 if __name__ == '__main__':
+
+    PHONE = input("Enter Phone:")
+    API_ID = input("Enter Api_id:")
+    API_HASH = input("Enter Api_hash:") 
 
     tg = Telegram(
         api_id=API_ID,
