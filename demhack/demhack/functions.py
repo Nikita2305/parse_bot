@@ -191,12 +191,12 @@ class AddChat (BasicDialogue):
         chat_pairs = []
         for chat_descr in chats:
             units = chat_descr.strip().split()
-            if (len(units) != 2):
+            if (len(units) = 0):
                 update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
                 return BasicDialogue.END
             try:
                 id = int(units[0])
-                descr = units[1]
+                descr = " ".join(units[1:])
             except Exception as ex:
                 update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
                 return BasicDialogue.END
