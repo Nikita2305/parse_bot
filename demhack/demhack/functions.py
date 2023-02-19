@@ -191,7 +191,7 @@ class AddChat (BasicDialogue):
         chat_pairs = []
         for chat_descr in chats:
             units = chat_descr.strip().split()
-            if (len(units) = 0):
+            if (len(units) == 0):
                 update.message.reply_text(f"Ошибка формата в строке {chat_descr}, повторите запрос с исправлением")
                 return BasicDialogue.END
             try:
