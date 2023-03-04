@@ -148,7 +148,7 @@ class EraseManager (BasicDialogue):
         except Exception as ex:
             update.message.reply_text("Необходимо число")
             return BasicDialogue.END
-        self.state.access_manager_obj.set_status(id, USER)
+        self.state.access_manager_obj.set_status(update.message.text, USER)
         update.message.reply_text(f"Удалён {id}")
         return BasicDialogue.END
 

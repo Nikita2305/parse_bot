@@ -1,11 +1,9 @@
 import logging.config
 import os
-from demhack.utils import ADMIN_ID
+from demhack.utils import ADMIN_ID, BOT_KEY
 
 from telegram import Bot
 
-# BOT_KEY = "5133601045:AAH8FIsPniGeoLK-8yo59wjEbX15VKqNAyM" # TEST
-BOT_KEY = "6125509742:AAHeDyuVpH_b7OuR2t2lIiR6s6AriRZlE98"
 toplevel = 'demhack'
 
 class TelegramBotHandler(logging.Handler):

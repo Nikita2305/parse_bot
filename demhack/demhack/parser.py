@@ -101,6 +101,7 @@ class MessageParser (SystemObject):
 
     def erase_keyword(self, word):
         self.mutex.acquire()
+        word = word.lower()
         if word not in self.keywords:
             self.mutex.release()
             return

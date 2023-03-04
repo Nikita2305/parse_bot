@@ -2,6 +2,7 @@ import logging
 import os
 import socket
 import jsonpickle
+import json
 
 from telegram.ext import (
     CommandHandler,
@@ -24,8 +25,13 @@ from telegram import (
 manager_path = os.path.dirname(__file__) + "/state/access_manager.txt"
 parser_path = os.path.dirname(__file__) + "/state/parser.txt"
 account_handler_path = os.path.dirname(__file__) + "/state/accounts.txt"
+credentials_path = os.path.dirname(__file__) + "/credentials.json"
 DATABASE_ENC_KEY = "vk_parse_bot_1234"
-ADMIN_ID = "305197734"
+
+with open(credentials_path, "r") as f:
+    creds = json.load(f)    
+    ADMIN_ID = creds["admin_id"]
+    BOT_KEY = creds["bot_token"]
 
 ARROWe = u'\U00002B07'
 OKe = u'\U00002705'
