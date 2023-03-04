@@ -34,6 +34,6 @@ Or, if you have password as second-factor authentication unit:
 "phone": "PASTE_PHONE",
 "api_id": "PASTE_API_ID",
 "api_hash": "PASTE_API_HASH",
-"passowrd": "PASTE_2FA_PASSWORD"
+"password": "PASTE_2FA_PASSWORD"
 }
 ```
