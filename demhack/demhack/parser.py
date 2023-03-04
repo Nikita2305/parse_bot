@@ -49,9 +49,15 @@ class MessageSource:
         self.chats.pop(index) 
         self.mutex.release()
 
+    def is_equal(self, id1, id2):
+        return (id1.startswith("-100") and ("-" + id1[4:] == id2))
+
     def find_chat(self, id):
         for i in range(len(self.chats)):
-            if (self.chats[i][0] == id):
+            other_id = str(self.chats[i][0])
+            if str(id) == other_id or \
+            self.is_equal(str(id), other_id) or \
+            self.is_equal(other_id, str(id)):
                 return i
         return -1
 

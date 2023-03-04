@@ -91,6 +91,7 @@ class Account:
         self.session.idle()
 
     def client_message_handler(self, update):
+        # print(update)
         message_content = update['message']['content']
         type = message_content['@type']
         if (type == 'messageChatAddMembers' and (self.account_info.id in message_content["member_user_ids"]) or type == 'messageChatJoinByLink'):
@@ -101,6 +102,7 @@ class Account:
         self.queue.put(update)
 
     def server_message_handler(self, update):
+        # print(self.source.get_chats())
         message_content = update['message']['content']
         type = message_content['@type']
         if type == 'messageText': 
