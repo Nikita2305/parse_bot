@@ -15,4 +15,25 @@ And also add file `demhack/demhack/credentials.json` with the following structur
 ./scripts/start.sh
 
 ## To login tg-account
-./scripts/login.sh
+./scripts/login.sh path/to/tg_config_name.config
+
+Where tg_config_name.config has structure:
+
+```json
+{
+"phone": "PASTE_PHONE",
+"api_id": "PASTE_API_ID",
+"api_hash": "PASTE_API_HASH"
+}
+```
+
+Or, if you have password as second-factor authentication unit:
+
+```json
+{
+"phone": "PASTE_PHONE",
+"api_id": "PASTE_API_ID",
+"api_hash": "PASTE_API_HASH",
+"passowrd": "PASTE_2FA_PASSWORD"
+}
+```

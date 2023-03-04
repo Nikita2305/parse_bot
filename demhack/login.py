@@ -1,16 +1,21 @@
 import argparse
 import getpass
 from pprint import pprint
+import json
 
 from telegram_simple.client import Telegram, AuthorizationState
 
 DATABASE_ENC_KEY = "vk_parse_bot_1234"
 
-if __name__ == '__main__':
-
-    PHONE = input("Enter Phone:")
-    API_ID = input("Enter Api_id:")
-    API_HASH = input("Enter Api_hash:") 
+def main(config_path):
+    with open(config_path, "r") as f:
+        config = json.load(f)    
+        PHONE = config["phone"]
+        API_ID = config["api_id"]
+        API_HASH = config["api_hash"]
+        PASSWORD = None
+        if "password" in config:
+            PASSWORD = config["password"]
 
     tg = Telegram(
         api_id=API_ID,
@@ -22,29 +27,39 @@ if __name__ == '__main__':
     # you must call login method before others
     state = tg.login(blocking=False)
 
-    print ("Checking the return state of the login(blocking=False) function call")
+    # print ("Checking the return state of the login(blocking=False) function call")
 
     if state == AuthorizationState.WAIT_CODE:
-        print("Pin is required. In this example, the main program is asking it, not the python-telegram client")
+        # print("Pin is required. In this example, the main program is asking it, not the python-telegram client")
         pin = input("Please insert pin code here: ")
         print("In this example, the main program is more polite than the python-telegram client")
         tg.send_code(pin)
         state = tg.login(blocking=False)
 
     if state == AuthorizationState.WAIT_PASSWORD:
-        print("Password is required. In this example, the main program is asking it, not the python-telegram client")
-        pwd = getpass.getpass('Insert password here (but please be sure that no one is spying on you): ')
-        tg.send_password(pwd)
+        # print("Password is required. In this example, the main program is asking it, not the python-telegram client")
+        # pwd = getpass.getpass('Insert password here (but please be sure that no one is spying on you): ')
+        if PASSWORD is None:
+            tg.stop()
+            print("Error: no second-factor password in config file") 
+            quit()
+        tg.send_password(PASSWORD)
         state = tg.login(blocking=False)
 
     print('Authorization state: %s' % tg.authorization_state)
 
-    # tg.add_message_handler(new_message_handler)
-    # tg.add_any_update_handler(print_handler)
-    # tg.idle()
-    
     result = tg.get_me()
     result.wait()
     print(result.update)
 
     tg.stop()
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='Auth tg-acc on the server')
+    parser.add_argument("input", help='.config file')
+    args = parser.parse_args()
+    if args.input is None:
+        print("Expected path to .config file")
+        quit()
+    main(args.input)

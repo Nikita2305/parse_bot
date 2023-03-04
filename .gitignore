@@ -6,6 +6,7 @@ __pycache__/
 demhack/demhack/state/*txt
 demhack/demhack/logs.txt
 demhack/demhack/credentials.json
+*.config
 
 # C extensions
 *.so
