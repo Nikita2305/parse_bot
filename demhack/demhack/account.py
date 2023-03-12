@@ -1,9 +1,12 @@
-from demhack.utils import SystemObject, DATABASE_ENC_KEY
+from demhack.utils import SystemObject, DATABASE_ENC_KEY, CODE_PATH
+from demhack.log_config import LOGGING_CONFIG, toplevel
 from telegram_simple.client import Telegram, AuthorizationState
 import threading
 import multiprocessing
 import time
 import queue
+import copy
+import logging.config
 
 class AccountInfo:
     def __init__(self, phone, app_id, api_hash):
@@ -17,7 +20,8 @@ class AccountInfo:
                     api_id=self.app_id,
                     api_hash=self.api_hash,
                     phone=self.phone,
-                    database_encryption_key=DATABASE_ENC_KEY
+                    database_encryption_key=DATABASE_ENC_KEY,
+                    files_directory=f'{CODE_PATH}/.tdlib_files/'
         )
 
     def get_state(self):
@@ -38,6 +42,8 @@ class AccountInfo:
         session.stop()
 
 """
+    # deprecated because of telegram-secutity-measure which prohibits sending codes by tg
+    # and then prohibits interative login
     def provide_with_code(self, code):
         session = self.get_session()
         session.send_code(code)
@@ -66,7 +72,7 @@ class Account:
         thread.daemon = True
         thread.start()
         self.process = multiprocessing.Process(target=self.client_event_loop)
-        self.daemon = True
+        self.process.daemon = True
         self.process.start()
   
     def stop(self):
@@ -85,10 +91,26 @@ class Account:
             print(f"serverside error {ex}")
 
     def client_event_loop(self):
+        account_id = self.account_info.phone
+
+        local_config = copy.deepcopy(LOGGING_CONFIG)
+        local_config["handlers"]["stream_handler"]["filename"] = f"{CODE_PATH}/logs_{account_id}.txt"
+        logging.config.dictConfig(local_config)
+        logger = logging.getLogger(toplevel)
+        logger.warning("Client event loop is going to run")
+         
         self.session = self.account_info.get_session()
         self.session.login(blocking=False)
         self.session.add_message_handler(self.client_message_handler)
-        self.session.idle()
+        while True:
+            for i in range(3):
+                try:
+                    self.session.idle()
+                except Exception as ex:
+                    logger.warning(f"Error in client event loop on account {account_id}, attempt={i} : {ex}")
+                    time.sleep(10)
+            logger.error(f"Account {account_id} is sleeping for 60 min. Consider relogin.")
+            time.sleep(3600)
 
     def client_message_handler(self, update):
         # print(update)

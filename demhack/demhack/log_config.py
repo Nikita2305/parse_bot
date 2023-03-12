@@ -1,6 +1,6 @@
 import logging.config
 import os
-from demhack.utils import ADMIN_ID, BOT_KEY
+from demhack.utils import ADMIN_ID, BOT_KEY, CODE_PATH
 
 from telegram import Bot
 
@@ -29,7 +29,7 @@ LOGGING_CONFIG = {
     'handlers': {
         'stream_handler': {
             'class': 'logging.FileHandler',
-            'filename': os.path.dirname(__file__) + '/logs.txt',
+            'filename': f'{CODE_PATH}/logs.txt',
             'level': 'DEBUG',
             'formatter': 'default_formatter'
         },

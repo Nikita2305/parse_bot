@@ -4,8 +4,9 @@ __pycache__/
 *$py.class
 
 demhack/demhack/state/*txt
-demhack/demhack/logs.txt
+demhack/demhack/logs*.txt
 demhack/demhack/credentials.json
+demhack/demhack/.tdlib_files/
 *.config
 
 # C extensions

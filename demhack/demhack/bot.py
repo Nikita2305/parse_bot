@@ -6,6 +6,7 @@ from demhack.parser import *
 from functools import wraps
 from demhack.account import *
 import multiprocessing
+import sys
 
 from telegram.ext import (
     Updater,
@@ -88,79 +89,82 @@ def useless_f(update, context):
     pass
 
 def main(logger, access_manager_obj, parser, account_handler):
-    updater = Updater(BOT_KEY, use_context=True)
-    dp = updater.dispatcher
-    scenarios = [
-        AddToChat(ChatMemberHandler(useless_f, ChatMemberHandler.MY_CHAT_MEMBER), show_help=False),
- 
-        PermissionHelpText("\n*HELP:*\n", MANAGER),
+    try:
+        updater = Updater(BOT_KEY, use_context=True)
+        dp = updater.dispatcher
+        scenarios = [
+            AddToChat(ChatMemberHandler(useless_f, ChatMemberHandler.MY_CHAT_MEMBER), show_help=False),
+     
+            PermissionHelpText("\n*HELP:*\n", MANAGER),
 
-        Help(),
-        GetId(), 
-        ThisIsAdminka(),
-        Guide(),
+            Help(),
+            GetId(), 
+            ThisIsAdminka(),
+            Guide(),
 
-        PermissionHelpText("\n", MANAGER),
-    
-        GetInfo(),
+            PermissionHelpText("\n", MANAGER),
+        
+            GetInfo(),
 
-        PermissionHelpText("\n*SETTINGS:*\n", MANAGER),  
+            PermissionHelpText("\n*SETTINGS:*\n", MANAGER),  
 
-        EraseKeyword(),
-        AddKeyword(), 
+            EraseKeyword(),
+            AddKeyword(), 
 
-        EraseChat(),
-        AddChat(),
+            EraseChat(),
+            AddChat(),
 
-        EraseAccount(),
-        AddAccount(), 
+            EraseAccount(),
+            AddAccount(), 
 
-        EraseManager(),
-        AddManager(), 
+            EraseManager(),
+            AddManager(), 
 
-        ParseTextMessage(handler=MessageHandler(Filters.text & ~Filters.command, useless_f), show_help=False)
-    ]
-    
-    help_texts = {USER: "", MANAGER: ""}
-    permissions = {USER: [], MANAGER: []} 
- 
-    state = State(logger, access_manager_obj, permissions, help_texts, parser, account_handler)
- 
-    for new_obj in scenarios:
-        state.logger.info(f"Adding handler: {new_obj}")
-        if isinstance(new_obj, PermissionHelpText):
+            ParseTextMessage(handler=MessageHandler(Filters.text & ~Filters.command, useless_f), show_help=False)
+        ]
+        
+        help_texts = {USER: "", MANAGER: ""}
+        permissions = {USER: [], MANAGER: []} 
+     
+        state = State(logger, access_manager_obj, permissions, help_texts, parser, account_handler)
+     
+        for new_obj in scenarios:
+            state.logger.info(f"Adding handler: {new_obj}")
+            if isinstance(new_obj, PermissionHelpText):
+                for level in [USER, MANAGER]:
+                    if new_obj.permissions & level != 0:
+                        state.help_texts[level] += new_obj.text
+                continue
+                
+            new_obj.configure_globals(state)
             for level in [USER, MANAGER]:
-                if new_obj.permissions & level != 0:
-                    state.help_texts[level] += new_obj.text
-            continue
-            
-        new_obj.configure_globals(state)
-        for level in [USER, MANAGER]:
-            if level & new_obj.permissions != 0:
-                if (new_obj.help_message is not None and new_obj.show_help):
-                    command = new_obj.help_message.replace("_", "\_")
-                    description = new_obj.description.replace("_", "\_")
-                    state.help_texts[level] += f"/{command} - {description}\n"
-                state.permissions[level] += [new_obj.get_callbacks()[0]]
+                if level & new_obj.permissions != 0:
+                    if (new_obj.help_message is not None and new_obj.show_help):
+                        command = new_obj.help_message.replace("_", "\_")
+                        description = new_obj.description.replace("_", "\_")
+                        state.help_texts[level] += f"/{command} - {description}\n"
+                    state.permissions[level] += [new_obj.get_callbacks()[0]]
 
-        for i, callback in enumerate(new_obj.get_callbacks()):
-            decorator = cancel_decorator
-            if (i == 0):
-                decorator = access_decorator
-            new_obj.get_callbacks()[i] = decorator(callback, state)
-       
-        dp.add_handler(new_obj.convert_to_telegram_handler())
+            for i, callback in enumerate(new_obj.get_callbacks()):
+                decorator = cancel_decorator
+                if (i == 0):
+                    decorator = access_decorator
+                new_obj.get_callbacks()[i] = decorator(callback, state)
+           
+            dp.add_handler(new_obj.convert_to_telegram_handler())
 
-    error_handler = ErrorHandler()
-    error_handler.configure_globals(state) 
-    dp.add_error_handler(error_handler.execute)
+        error_handler = ErrorHandler()
+        error_handler.configure_globals(state) 
+        dp.add_error_handler(error_handler.execute)
 
-    state.account_handler.unlock_all()
-    state.parser.unlock_all()
-    state.account_handler.setup_with_parser(state.parser) # problem of references + jsonpickle
-    state.account_handler.run_all()
-
-    logger.debug("Polling was started")
+        state.account_handler.unlock_all()
+        state.parser.unlock_all()
+        state.account_handler.setup_with_parser(state.parser) # problem of references + jsonpickle
+        state.account_handler.run_all()
+    except Exception as ex:
+        logger.error(f"Bot didn't started, error: {ex}")
+        sys.exit(0)
+    
     updater.start_polling()
     updater.idle()
 
