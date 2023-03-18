@@ -1,7 +1,7 @@
 # demhack
 
 ## To prepare
-./scripts/setup.sh
+`./scripts/setup.sh`
 
 And also add file `demhack/demhack/credentials.json` with the following structure:
 ```json
@@ -12,10 +12,10 @@ And also add file `demhack/demhack/credentials.json` with the following structur
 ```
 
 ## To run the bot
-./scripts/start.sh
+`./scripts/start.sh`
 
 ## To login tg-account
-./scripts/login.sh path/to/tg_config_name.config
+`./scripts/login.sh path/to/tg_config_name.config`
 
 Where tg_config_name.config has structure:
 
