@@ -103,6 +103,7 @@ class Account:
         self.session.login(blocking=False)
         self.session.add_message_handler(self.client_message_handler)
         while True:
+            logger.warning("Client event loop is running")
             for i in range(3):
                 try:
                     self.session.idle()

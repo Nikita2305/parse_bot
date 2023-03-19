@@ -167,6 +167,7 @@ def main(logger, access_manager_obj, parser, account_handler):
     
     updater.start_polling()
     updater.idle()
+    logger.critical(f"Bot is offline?")
 
 def declare_globals():
     logging.config.dictConfig(LOGGING_CONFIG)
